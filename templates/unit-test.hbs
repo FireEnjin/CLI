@@ -1,0 +1,13 @@
+import connect from "../../connect";
+connect();
+
+import {{nameFromPathCamel name}} from "./{{nameFromPathCamel name}}";
+
+describe("{{titleCase name}}", () => {
+  it("Should {{description}}", async done => {
+    const response = await {{nameFromPathCamel name}}({});
+    console.log(response);
+    expect(response).toMatchObject({});
+    done();
+  });
+});

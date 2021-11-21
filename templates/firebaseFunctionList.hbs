@@ -1,0 +1,22 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const functions = require("firebase-functions");
+const connect_1 = require("../connect");
+connect_1.default();
+const {{nameFromPathPascal modelName}}_1 = require("../models/{{nameFromPathPascal modelName}}");
+const cors = require("cors")({ origin: true });
+exports.default = functions.https.onRequest(async (req, res) => {
+    cors(req, res, async () => {
+        try {
+            return res.status(200).send({
+                {{nameFromPathCamel modelName}}: await new {{nameFromPathPascal modelName}}_1.{{nameFromPathPascal modelName}}Model().limit(req.body.limit ? req.body.limit : 15).find()
+            });
+        }
+        catch (err) {
+            console.log("Error listing {{nameFromPathCamel modelName}} documents...", err);
+            return res.status(500).send({
+                message: err.message
+            });
+        }
+    });
+});

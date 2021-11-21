@@ -1,0 +1,23 @@
+import { storiesOf } from "@storybook/html";
+import { withKnobs } from "@storybook/addon-knobs";
+
+import readme from "./readme.md";
+
+const storyOptions = {
+  notes: {
+    markdown: readme
+  },
+  knobs: {
+    timestamps: true
+  }
+};
+
+storiesOf("{{titleCase name}}", module)
+  .addDecorator(withKnobs)
+  .addParameters({ jest: ["{{dashCase name}}"] })
+  .add(
+    "Default",
+    () =>
+      `<{{namespace}}{{dashCase name}}></{{namespace}}{{dashCase name}}>`,
+    storyOptions
+  );

@@ -1,0 +1,18 @@
+import { Build, Component, h } from "@stencil/core";
+
+@Component({
+  tag: "{{namespace}}{{dashCase name}}",
+  styleUrl: "{{dashCase name}}.css"
+})
+export class {{nameFromPathPascal name}} {
+
+  componentDidLoad() {
+    if (Build.isBrowser) {
+      // Get Data
+    }
+  }
+
+  render() {
+    return <div></div>;
+  }
+}

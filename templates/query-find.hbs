@@ -1,0 +1,5 @@
+query find{{nameFromPathPascal name}}($id: String!) {
+  {{nameFromPathCamel name}}(id: $id) {
+    id
+  }
+}
