@@ -51,3 +51,7 @@ This command allows you to clone seeds from Firestore to your project.
 **triggers**
 
 This command builds an index for Firebase Functions.
+
+---
+
+Made with <3 by Madness Labs
