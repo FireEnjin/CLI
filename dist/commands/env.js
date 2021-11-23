@@ -59,10 +59,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
+var path = __importStar(require("path"));
 var tiny_glob_1 = __importDefault(require("tiny-glob"));
 var currentEnv = process.argv[3] ? process.argv[3] : "local";
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var _i, _a, file;
+    var _i, _a, file, fileDest;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -75,12 +76,14 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
             case 2:
                 if (!(_i < _a.length)) return [3 /*break*/, 4];
                 file = _a[_i];
-                fs.copyFileSync(file, process.cwd() +
-                    "/" +
+                fileDest = process.cwd() +
+                    path.sep +
                     file
-                        .split("/")
-                        .filter(function (_part, index) { return index > 2; })
-                        .join("/"));
+                        .split(path.sep)
+                        .filter(function (_part, index) { return index > 1; })
+                        .join(path.sep);
+                console.log(file, fileDest);
+                fs.copyFileSync(file, fileDest);
                 _b.label = 3;
             case 3:
                 _i++;
