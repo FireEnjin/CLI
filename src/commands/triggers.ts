@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import glob from "tiny-glob";
 import * as pluralize from "pluralize";
+import path from "path";
 
 async function renderToFile(
   templateName: string,
@@ -64,7 +65,7 @@ export default async () => {
   // CREATE IMPORT AND EXPORT STRINGS FOR TRIGGERS
   for (const file of await glob(`./src/triggers/**/*.ts`)) {
     // const triggerFile = fs.readFileSync(file, "utf8");
-    const pathParts = file.split("/");
+    const pathParts = file.split(path.sep);
     const triggerName = pathParts[pathParts.length - 1].split(".")[0];
     importStr += `const ${triggerName} = require("./triggers/${triggerName}");\n`;
     exportStr += `  ${triggerName}: ${triggerName}.default,\n`;

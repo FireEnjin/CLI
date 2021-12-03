@@ -61,6 +61,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
 var tiny_glob_1 = __importDefault(require("tiny-glob"));
 var pluralize = __importStar(require("pluralize"));
+var path_1 = __importDefault(require("path"));
 function renderToFile(templateName, location, dataFilter) {
     return __awaiter(this, void 0, void 0, function () {
         var _this = this;
@@ -134,7 +135,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
             case 2:
                 if (!(_i < _a.length)) return [3 /*break*/, 4];
                 file = _a[_i];
-                pathParts = file.split("/");
+                pathParts = file.split(path_1.default.sep);
                 triggerName = pathParts[pathParts.length - 1].split(".")[0];
                 importStr += "const ".concat(triggerName, " = require(\"./triggers/").concat(triggerName, "\");\n");
                 exportStr += "  ".concat(triggerName, ": ").concat(triggerName, ".default,\n");

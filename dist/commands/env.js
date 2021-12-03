@@ -82,7 +82,6 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                         .split(path.sep)
                         .filter(function (_part, index) { return index > 1; })
                         .join(path.sep);
-                console.log(file, fileDest);
                 fs.copyFileSync(file, fileDest);
                 _b.label = 3;
             case 3:
