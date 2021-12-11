@@ -61,6 +61,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var tiny_glob_1 = __importDefault(require("tiny-glob"));
 var fbAdmin = __importStar(require("firebase-admin"));
 var fs = __importStar(require("fs"));
+var path = __importStar(require("path"));
+function checkForReferences(object) {
+    var _a;
+    return __awaiter(this, void 0, void 0, function () {
+        var data, _i, _b, key, value;
+        return __generator(this, function (_c) {
+            data = object;
+            for (_i = 0, _b = Object.keys(object); _i < _b.length; _i++) {
+                key = _b[_i];
+                value = object[key];
+                if (((_a = value === null || value === void 0 ? void 0 : value.constructor) === null || _a === void 0 ? void 0 : _a.name) === "Timestamp") {
+                    data[key] = value.toDate();
+                }
+                else if (typeof value === undefined) {
+                    data[key] = null;
+                }
+            }
+            return [2 /*return*/, data];
+        });
+    });
+}
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
     function connectDatabase() {
         var _a, _b, _c;
@@ -80,9 +101,9 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
         }
         return firestore;
     }
-    var env, getDirectories, seedCount, seedGlob, files, _i, seedGlob_1, seedFolder, _a, _b, _c, db, _d, files_1, file, pathArr, currentSeed, _e, isDocument, docRef, i;
-    return __generator(this, function (_f) {
-        switch (_f.label) {
+    var env, getDirectories, seedCount, seedGlob, files, _i, seedGlob_1, seedFolder, _a, _b, _c, db, _d, files_1, file, pathArr, currentSeed, _e, isDocument, docRef, i, _f, _g, error_1;
+    return __generator(this, function (_h) {
+        switch (_h.label) {
             case 0:
                 env = require("".concat(process.cwd(), "/environment.json"));
                 getDirectories = function (source) {
@@ -101,7 +122,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     .map(function (collection) { return "./dist/seeds/".concat(collection, "/**/*.js"); });
                 files = [];
                 _i = 0, seedGlob_1 = seedGlob;
-                _f.label = 1;
+                _h.label = 1;
             case 1:
                 if (!(_i < seedGlob_1.length)) return [3 /*break*/, 4];
                 seedFolder = seedGlob_1[_i];
@@ -109,34 +130,37 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                 _c = [files];
                 return [4 /*yield*/, (0, tiny_glob_1.default)(seedFolder)];
             case 2:
-                _b.apply(_a, _c.concat([(_f.sent())]));
-                _f.label = 3;
+                _b.apply(_a, _c.concat([(_h.sent())]));
+                _h.label = 3;
             case 3:
                 _i++;
                 return [3 /*break*/, 1];
             case 4:
                 db = connectDatabase();
                 _d = 0, files_1 = files;
-                _f.label = 5;
+                _h.label = 5;
             case 5:
-                if (!(_d < files_1.length)) return [3 /*break*/, 11];
+                if (!(_d < files_1.length)) return [3 /*break*/, 14];
                 file = files_1[_d];
-                pathArr = file.split("/");
-                currentSeed = require("".concat(file.replace("./", "".concat(process.cwd(), "/")))).default(db);
-                if (!(typeof currentSeed.then === "function")) return [3 /*break*/, 7];
-                return [4 /*yield*/, currentSeed];
+                _h.label = 6;
             case 6:
-                _e = _f.sent();
-                return [3 /*break*/, 8];
+                _h.trys.push([6, 12, , 13]);
+                pathArr = file.split(path.sep);
+                currentSeed = require("".concat(file.replace("dist".concat(path.sep), "".concat(process.cwd()).concat(path.sep, "dist").concat(path.sep)))).default(db);
+                if (!(typeof currentSeed.then === "function")) return [3 /*break*/, 8];
+                return [4 /*yield*/, currentSeed];
             case 7:
-                _e = currentSeed;
-                _f.label = 8;
+                _e = _h.sent();
+                return [3 /*break*/, 9];
             case 8:
+                _e = currentSeed;
+                _h.label = 9;
+            case 9:
                 currentSeed = _e;
-                isDocument = pathArr[4].indexOf(".") >= 0;
+                isDocument = pathArr[3].indexOf(".") >= 0;
                 docRef = db
-                    .collection(pathArr[3])
-                    .doc(isDocument ? pathArr[4].split(".")[0] : pathArr[4]);
+                    .collection(pathArr[2])
+                    .doc(isDocument ? pathArr[3].split(".")[0] : pathArr[3]);
                 if (!isDocument) {
                     for (i = 5; i < pathArr.length; i++) {
                         isDocument = pathArr[i].indexOf(".") >= 0;
@@ -146,15 +170,21 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                                 : docRef.collection(pathArr[i]);
                     }
                 }
-                return [4 /*yield*/, docRef.set(currentSeed)];
-            case 9:
-                _f.sent();
+                _g = (_f = docRef).set;
+                return [4 /*yield*/, checkForReferences(currentSeed)];
+            case 10: return [4 /*yield*/, _g.apply(_f, [_h.sent()])];
+            case 11:
+                _h.sent();
                 seedCount = seedCount + 1;
-                _f.label = 10;
-            case 10:
+                return [3 /*break*/, 13];
+            case 12:
+                error_1 = _h.sent();
+                console.log("Seed failed to run", file, error_1);
+                return [3 /*break*/, 13];
+            case 13:
                 _d++;
                 return [3 /*break*/, 5];
-            case 11:
+            case 14:
                 console.log("".concat(seedCount, " seeds ran successfully!"));
                 return [2 /*return*/];
         }

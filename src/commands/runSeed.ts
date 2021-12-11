@@ -1,6 +1,21 @@
 import glob from "tiny-glob";
 import * as fbAdmin from "firebase-admin";
 import * as fs from "fs";
+import * as path from "path";
+
+async function checkForReferences(object: any) {
+  const data = object;
+  for (const key of Object.keys(object)) {
+    const value = object[key];
+    if (value?.constructor?.name === "Timestamp") {
+      data[key] = value.toDate();
+    } else if (typeof value === undefined) {
+      data[key] = null;
+    }
+  }
+
+  return data;
+}
 
 export default async () => {
   const env = require(`${process.cwd()}/environment.json`);
@@ -51,31 +66,37 @@ export default async () => {
 
   const db = connectDatabase();
   for (const file of files) {
-    const pathArr = file.split("/");
-    let currentSeed = require(`${file.replace(
-      "./",
-      `${process.cwd()}/`
-    )}`).default(db);
-    currentSeed =
-      typeof currentSeed.then === "function" ? await currentSeed : currentSeed;
-    let isDocument = pathArr[4].indexOf(".") >= 0;
-    let docRef: any = db
-      .collection(pathArr[3])
-      .doc(isDocument ? pathArr[4].split(".")[0] : pathArr[4]);
+    try {
+      const pathArr = file.split(path.sep);
+      let currentSeed = require(`${file.replace(
+        `dist${path.sep}`,
+        `${process.cwd()}${path.sep}dist${path.sep}`
+      )}`).default(db);
+      currentSeed =
+        typeof currentSeed.then === "function"
+          ? await currentSeed
+          : currentSeed;
+      let isDocument = pathArr[3].indexOf(".") >= 0;
+      let docRef: any = db
+        .collection(pathArr[2])
+        .doc(isDocument ? pathArr[3].split(".")[0] : pathArr[3]);
 
-    if (!isDocument) {
-      for (let i = 5; i < pathArr.length; i++) {
-        isDocument = pathArr[i].indexOf(".") >= 0;
-        docRef =
-          isDocument || docRef
-            ? docRef.doc(isDocument ? pathArr[i].split(".")[0] : pathArr[i])
-            : docRef.collection(pathArr[i]);
+      if (!isDocument) {
+        for (let i = 5; i < pathArr.length; i++) {
+          isDocument = pathArr[i].indexOf(".") >= 0;
+          docRef =
+            isDocument || docRef
+              ? docRef.doc(isDocument ? pathArr[i].split(".")[0] : pathArr[i])
+              : docRef.collection(pathArr[i]);
+        }
       }
+
+      await docRef.set(await checkForReferences(currentSeed));
+
+      seedCount = seedCount + 1;
+    } catch (error) {
+      console.log(`Seed failed to run`, file, error);
     }
-
-    await docRef.set(currentSeed);
-
-    seedCount = seedCount + 1;
   }
 
   console.log(`${seedCount} seeds ran successfully!`);
