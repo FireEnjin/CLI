@@ -38,7 +38,7 @@ export default async () => {
 
     const firestore = fbAdmin.firestore();
 
-    if (env?.firestore?.emulate) {
+    if (env?.emulate || env?.firestore?.emulate) {
       firestore.settings({
         host: env.firestore?.host ? env.firestore.host : "localhost:8080",
         ssl: !!env.firestore?.ssl,

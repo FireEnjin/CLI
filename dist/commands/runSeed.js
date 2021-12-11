@@ -93,7 +93,8 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
             storageBucket: "".concat(project, ".appspot.com"),
         });
         var firestore = fbAdmin.firestore();
-        if ((_a = env === null || env === void 0 ? void 0 : env.firestore) === null || _a === void 0 ? void 0 : _a.emulate) {
+        if ((env === null || env === void 0 ? void 0 : env.emulate) || ((_a = env === null || env === void 0 ? void 0 : env.firestore) === null || _a === void 0 ? void 0 : _a.emulate)) {
+            console.log(" I ran");
             firestore.settings({
                 host: ((_b = env.firestore) === null || _b === void 0 ? void 0 : _b.host) ? env.firestore.host : "localhost:8080",
                 ssl: !!((_c = env.firestore) === null || _c === void 0 ? void 0 : _c.ssl),
