@@ -6,7 +6,6 @@ import copyCommand from "./commands/copy";
 import envCommand from "./commands/env";
 import generateCommand from "./commands/generate";
 import migrateCommand from "./commands/migrate";
-import newCommand from "./commands/new";
 import presetsCommand from "./commands/presets";
 import runSeedCommand from "./commands/runSeed";
 import randomSeedCommand from "./commands/randomSeed";
@@ -30,7 +29,7 @@ if (process.argv.length > 2) {
   } else if (process.argv[2] === "migrate") {
     migrateCommand().catch((err) => console.log(err));
   } else if (process.argv[2] === "new") {
-    newCommand().catch((err) => console.log(err));
+    console.log("This command is being reengineered...");
   } else if (process.argv[2] === "triggers") {
     triggers().catch((err) => console.log(err));
   } else {
