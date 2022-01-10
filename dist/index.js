@@ -33,6 +33,7 @@ var presets_1 = __importDefault(require("./commands/presets"));
 var runSeed_1 = __importDefault(require("./commands/runSeed"));
 var randomSeed_1 = __importDefault(require("./commands/randomSeed"));
 var triggers_1 = __importDefault(require("./commands/triggers"));
+var transpileComponent_1 = __importDefault(require("./commands/transpileComponent"));
 if (process.argv.length > 2) {
     if (process.argv[2] === "copy") {
         (0, copy_1.default)().catch(function (err) { return console.log(err); });
@@ -63,6 +64,9 @@ if (process.argv.length > 2) {
     }
     else if (process.argv[2] === "triggers") {
         (0, triggers_1.default)().catch(function (err) { return console.log(err); });
+    }
+    else if (process.argv[2] === "component:transpile") {
+        (0, transpileComponent_1.default)(process.argv[3]).catch(function (err) { return console.log(err); });
     }
     else {
         console.log("".concat(process.argv[2], " command doesn't exist!"));
