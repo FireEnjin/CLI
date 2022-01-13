@@ -10,7 +10,6 @@ import presetsCommand from "./commands/presets";
 import runSeedCommand from "./commands/runSeed";
 import randomSeedCommand from "./commands/randomSeed";
 import triggers from "./commands/triggers";
-import transpileComponent from "./commands/transpileComponent";
 
 if (process.argv.length > 2) {
   if (process.argv[2] === "copy") {
@@ -33,8 +32,6 @@ if (process.argv.length > 2) {
     console.log("This command is being reengineered...");
   } else if (process.argv[2] === "triggers") {
     triggers().catch((err) => console.log(err));
-  } else if (process.argv[2] === "component:transpile") {
-    transpileComponent(process.argv[3]).catch((err) => console.log(err));
   } else {
     console.log(`${process.argv[2]} command doesn't exist!`);
   }

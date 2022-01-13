@@ -1,0 +1,8 @@
+import { InputType, Field } from "type-graphql";
+import {{nameFromPathPascal name}} from "./{{nameFromPathPascal name}}";
+
+@InputType({ description: "Editable {{nameFromPathPascal name}} data" })
+export default class {{nameFromPathPascal name}}Input implements Partial<{{nameFromPathPascal name}}> {
+  @Field()
+  name: string;
+}

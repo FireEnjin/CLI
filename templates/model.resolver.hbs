@@ -1,0 +1,17 @@
+import { Resolver, FieldResolver, Root } from "type-graphql";
+
+import {{nameFromPathPascal name}} from "./{{nameFromPathPascal name}}";
+import {{nameFromPathPascal name}}Model from "./{{nameFromPathPascal name}}.model";
+
+@Resolver(of => {{nameFromPathPascal name}})
+export default class {{nameFromPathPascal name}}Resolver extends new {{nameFromPathPascal name}}Model().Resolver {
+  // @FieldResolver()
+  // createdBy(@Root() data: User): Promise<User> {
+  //   return new UserModel().find(data.createdBy.id);
+  // }
+
+  // @FieldResolver()
+  // updatedBy(@Root() data: User): Promise<User> {
+  //   return new UserModel().find(data.updatedBy.id);
+  // }
+}

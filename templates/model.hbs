@@ -1,48 +1,34 @@
 import { Collection } from "fireorm";
-import {
-  Field,
-  ID,
-  ObjectType,
-  Resolver,
-  Root,
-  FieldResolver,
-  InputType
-} from "type-graphql";
+import { ObjectType, Field, ID } from "type-graphql";
+// import * as admin from "firebase-admin";
+// import User from "../User/User";
 
-import Model from "./Model";
 
 @Collection("{{plural name}}")
 @ObjectType({
   description: "The information for a {{nameFromPathPascal name}} document"
 })
-export class {{nameFromPathPascal name}} {
+export default class {{nameFromPathPascal name}} {
   @Field(() => ID)
   id: string;
   @Field({
     description: "The name of the {{nameFromPathPascal name}}"
   })
   name?: string;
-}
-
-@InputType({ description: "Editable {{nameFromPathPascal name}} data" })
-export class {{nameFromPathPascal name}}Input implements Partial<{{nameFromPathPascal name}}> {
-  @Field()
-  name: string;
-}
-
-export class {{nameFromPathPascal name}}Model extends Model<{{nameFromPathPascal name}}> {
-  constructor() {
-    super({
-      docSchema: {{nameFromPathPascal name}},
-      inputType: {{nameFromPathPascal name}}Input
-    });
-  }
-}
-
-@Resolver(of => {{nameFromPathPascal name}})
-export class {{nameFromPathPascal name}}Resolver extends new {{nameFromPathPascal name}}Model().Resolver {
-//   @FieldResolver()
-//   user(@Root() data: {{nameFromPathPascal name}}): Promise<User> {
-//     return new UserModel().find(data.user.id);
-//   }
+  // @Field(() => String, {
+  //   description: "When the document was created",
+  // })
+  // createdAt?: admin.firestore.Timestamp;
+  // @Field(() => String, {
+  //   description: "When the document was updated",
+  // })
+  // updatedAt?: admin.firestore.Timestamp;
+  // @Field(() => User, {
+  //   description: "Who created the document",
+  // })
+  // createdBy?: User;
+  // @Field(() => User!, {
+  //   description: "Who updated the document last",
+  // })
+  // updatedBy?: User;
 }

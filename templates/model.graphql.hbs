@@ -1,0 +1,13 @@
+import { Model } from "@fireenjin/graphql";
+
+import {{nameFromPathPascal name}} from "./{{nameFromPathPascal name}}";
+import {{nameFromPathPascal name}}Input from "./{{nameFromPathPascal name}}.input";
+
+export default class {{nameFromPathPascal name}}Model extends Model<{{nameFromPathPascal name}}> {
+  constructor() {
+    super({
+      docSchema: {{nameFromPathPascal name}},
+      inputType: {{nameFromPathPascal name}}Input
+    });
+  }
+}
