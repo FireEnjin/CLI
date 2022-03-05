@@ -2,7 +2,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -31,7 +35,6 @@ var generate_1 = __importDefault(require("./commands/generate"));
 var migrate_1 = __importDefault(require("./commands/migrate"));
 var presets_1 = __importDefault(require("./commands/presets"));
 var runSeed_1 = __importDefault(require("./commands/runSeed"));
-var randomSeed_1 = __importDefault(require("./commands/randomSeed"));
 var triggers_1 = __importDefault(require("./commands/triggers"));
 if (process.argv.length > 2) {
     if (process.argv[2] === "copy") {
@@ -39,9 +42,6 @@ if (process.argv.length > 2) {
     }
     else if (process.argv[2] === "generate") {
         (0, generate_1.default)().catch(function (err) { return console.log(err); });
-    }
-    else if (process.argv[2] === "seed:random") {
-        (0, randomSeed_1.default)().catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "seed:clone") {
         (0, cloneSeed_1.default)().catch(function (err) { return console.log(err); });
