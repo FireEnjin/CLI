@@ -37,7 +37,6 @@
     "@semantic-release/npm": "^9.0.1",
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/jest": "^27.4.1",
-    "@types/node": "^14.18.3",
     "jest": "^27.5.1",
     "semantic-release": "^19.0.2",
     "ts-jest": "^27.1.3",
