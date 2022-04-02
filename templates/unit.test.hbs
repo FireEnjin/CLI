@@ -1,9 +1,12 @@
-import connect from "../../connect";
-connect();
-
+// import { connectFirestore } from "@fireenjin/graphql";
 import {{nameFromPathCamel name}} from "./{{nameFromPathCamel name}}";
 
 describe("{{titleCase name}}", () => {
+  // beforeAll(() => {
+  //   connectFirestore({
+  //     serviceAccount: true,
+  //   });
+  // });
   it("Should {{description}}", async done => {
     const response = await {{nameFromPathCamel name}}({});
     console.log(response);
