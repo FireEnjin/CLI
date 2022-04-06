@@ -1,0 +1,49 @@
+import { Build, Component, ComponentInterface, Host, Listen, State, h } from "@stencil/core";
+
+@Component({
+  tag: "{{namespace}}{{dashCase name}}",
+  styleUrl: "{{dashCase name}}.css"
+})
+export class {{nameFromPathPascal name}} implements ComponentInterface {
+  filterBarEl: any;
+  paginationEl: any;
+
+  @State() query: string;
+  @State() filters: any = {};
+  @State() endpoint = "{{endpoint}}";
+  @State() limit = 24;
+
+  @Listen("ionInput")
+  onSearchInput(event) {
+    this.query = event.target.value;
+  }
+
+  componentDidLoad() {
+    if (!Build?.isBrowser) return;
+    // Get Data
+  }
+
+  render() {
+    return (
+      <ion-content>
+        <fireenjin-search-bar
+          ref={(el) => (this.filterBarEl = el)}
+          paginationEl={this.paginationEl}
+          filter={
+            this.filters
+          }
+        />
+        <fireenjin-pagination
+          ref={(el) => (this.paginationEl = el)}
+          listEl={(result) => (
+            <ion-item>{result?.id}</ion-item>
+          )}
+          endpoint={this.endpoint}
+          limit={this.limit}
+          query={this.query}
+        />
+        {{innerHTML}}
+      </ion-content>
+    );
+  }
+}

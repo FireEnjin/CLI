@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, h, Host } from "@stencil/core";
+import { Build, Component, ComponentInterface, Host, h } from "@stencil/core";
 
 @Component({
   tag: "{{namespace}}{{dashCase name}}",
@@ -6,14 +6,20 @@ import { Build, Component, ComponentInterface, h, Host } from "@stencil/core";
 })
 export class {{nameFromPathPascal name}} implements ComponentInterface {
 
+  @State() endpoint = "{{endpoint}}";
+
   componentDidLoad() {
     if (!Build?.isBrowser) return;
     // Get Data
   }
 
-    render() {
+  render() {
     return (
-      <Host>{{innerHTML}}</Host>
+      <ion-content>
+        <fireenjin-form endpoint={this.endpoint}>
+          {{innerHTML}}
+        </fireenjin-form>
+      </ion-content>
     );
   }
 }

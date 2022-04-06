@@ -3,6 +3,9 @@ const package = require(`${process.env.enjinProjectDir}/package.json`);
 const hasStorybook = Object.keys(package.devDependencies).includes(
   "@storybook/html"
 );
+const hasDocs = Object.keys(package.devDependencies).includes(
+  "@fireenjin/docs"
+);
 const enjinSettings = package.enjin ? package.enjin : {};
 
 function camelize(text) {
@@ -279,10 +282,59 @@ module.exports = function (plop) {
       data: handlebarsData,
     });
   }
+  if (hasDocs) {
+    componentActions.push({
+      type: "add",
+      path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.presets.js`,
+      templateFile: `${__dirname}/templates/component.presets.hbs`,
+      data: handlebarsData,
+    });
+  }
   plop.setGenerator("component", {
     description: "Create a new web component",
     prompts: componentProps,
     actions: componentActions,
+  });
+  plop.setGenerator("page", {
+    description: "Create a new page component",
+    prompts: [
+      {
+        type: "input",
+        name: "type",
+        message: "The type of page",
+        choices: ["list", "form", "blank"],
+        default: "blank",
+      },
+      {
+        type: "input",
+        name: "namespace",
+        message: "The namespace of the page",
+        filter: (data) => {
+          return !data || data === ""
+            ? ""
+            : data.replace(" ", "-").toLowerCase() + "-";
+        },
+      },
+      {
+        type: "input",
+        name: "endpoint",
+        message: "The endpoint for the list / form page",
+      },
+    ],
+    actions: [
+      {
+        type: "add",
+        path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.tsx`,
+        templateFile: `${__dirname}/templates/page.{{type}}.tsx.hbs`,
+        data: handlebarsData,
+      },
+      {
+        type: "add",
+        path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.css`,
+        templateFile: `${__dirname}/templates/page.{{type}}.css.hbs`,
+        data: handlebarsData,
+      },
+    ],
   });
   plop.setGenerator("model", {
     description: "Define data structure and relationships",

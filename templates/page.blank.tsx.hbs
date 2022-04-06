@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, h, Host } from "@stencil/core";
+import { Build, Component, ComponentInterface, Host, h } from "@stencil/core";
 
 @Component({
   tag: "{{namespace}}{{dashCase name}}",
@@ -11,9 +11,11 @@ export class {{nameFromPathPascal name}} implements ComponentInterface {
     // Get Data
   }
 
-    render() {
+  render() {
     return (
-      <Host>{{innerHTML}}</Host>
+      <ion-content>
+        {{innerHTML}}
+      </ion-content>
     );
   }
 }
