@@ -4,7 +4,7 @@ import { Build, Component, ComponentInterface, State, h } from "@stencil/core";
   tag: "{{namespace}}{{dashCase name}}",
   styleUrl: "{{dashCase name}}.css"
 })
-export class {{nameFromPathPascal name}} implements ComponentInterface {
+export class Page{{nameFromPathPascal name}} implements ComponentInterface {
 
   @State() endpoint = "{{endpoint}}";
 
