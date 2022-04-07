@@ -300,6 +300,11 @@ module.exports = function (plop) {
     prompts: [
       {
         type: "input",
+        name: "name",
+        message: "The name of the new page",
+      },
+      {
+        type: "list",
         name: "type",
         message: "The type of page",
         choices: ["list", "form", "blank"],
@@ -309,6 +314,7 @@ module.exports = function (plop) {
         type: "input",
         name: "namespace",
         message: "The namespace of the page",
+        default: enjinSettings?.namespace || "",
         filter: (data) => {
           return !data || data === ""
             ? ""
@@ -455,7 +461,7 @@ module.exports = function (plop) {
         message: "The name of the query",
       },
       {
-        type: "input",
+        type: "list",
         name: "type",
         message: "The type of query",
         choices: ["read", "write"],
