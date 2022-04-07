@@ -1,10 +1,10 @@
-import { Build, Component, ComponentInterface, Host, h } from "@stencil/core";
+import { Build, Component, ComponentInterface, h } from "@stencil/core";
 
 @Component({
   tag: "{{namespace}}{{dashCase name}}",
   styleUrl: "{{dashCase name}}.css"
 })
-export class {{nameFromPathPascal name}} implements ComponentInterface {
+export class Page{{nameFromPathPascal name}} implements ComponentInterface {
 
   componentDidLoad() {
     if (!Build?.isBrowser) return;

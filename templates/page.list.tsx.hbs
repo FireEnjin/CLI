@@ -1,4 +1,4 @@
-import { Build, Component, ComponentInterface, Host, Listen, State, h } from "@stencil/core";
+import { Build, Component, ComponentInterface, Listen, State, h } from "@stencil/core";
 
 @Component({
   tag: "{{namespace}}{{dashCase name}}",
@@ -29,7 +29,7 @@ export class {{nameFromPathPascal name}} implements ComponentInterface {
         <fireenjin-search-bar
           ref={(el) => (this.filterBarEl = el)}
           paginationEl={this.paginationEl}
-          filter={
+          filters={
             this.filters
           }
         />
