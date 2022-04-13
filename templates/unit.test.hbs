@@ -7,10 +7,9 @@ describe("{{titleCase name}}", () => {
   //     serviceAccount: true,
   //   });
   // });
-  it("Should {{description}}", async done => {
+  it("Should {{description}}", async () => {
     const response = await {{nameFromPathCamel name}}({});
     console.log(response);
     expect(response).toMatchObject({});
-    done();
   });
 });
