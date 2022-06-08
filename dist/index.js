@@ -32,6 +32,7 @@ var cloneSeed_1 = __importDefault(require("./commands/cloneSeed"));
 var copy_1 = __importDefault(require("./commands/copy"));
 var env_1 = __importDefault(require("./commands/env"));
 var generate_1 = __importDefault(require("./commands/generate"));
+var graphql_1 = __importDefault(require("./commands/graphql"));
 var migrate_1 = __importDefault(require("./commands/migrate"));
 var presets_1 = __importDefault(require("./commands/presets"));
 var runSeed_1 = __importDefault(require("./commands/runSeed"));
@@ -39,6 +40,9 @@ var triggers_1 = __importDefault(require("./commands/triggers"));
 if (process.argv.length > 2) {
     if (process.argv[2] === "copy") {
         (0, copy_1.default)().catch(function (err) { return console.log(err); });
+    }
+    else if (process.argv[2] === "gql") {
+        (0, graphql_1.default)().catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "generate") {
         (0, generate_1.default)().catch(function (err) { return console.log(err); });

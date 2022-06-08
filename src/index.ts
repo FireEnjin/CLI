@@ -5,6 +5,7 @@ import cloneSeedCommand from "./commands/cloneSeed";
 import copyCommand from "./commands/copy";
 import envCommand from "./commands/env";
 import generateCommand from "./commands/generate";
+import graphql from "./commands/graphql";
 import migrateCommand from "./commands/migrate";
 import presetsCommand from "./commands/presets";
 import runSeedCommand from "./commands/runSeed";
@@ -13,6 +14,8 @@ import triggers from "./commands/triggers";
 if (process.argv.length > 2) {
   if (process.argv[2] === "copy") {
     copyCommand().catch((err) => console.log(err));
+  } else if (process.argv[2] === "gql") {
+    graphql().catch((err) => console.log(err));
   } else if (process.argv[2] === "generate") {
     generateCommand().catch((err) => console.log(err));
   } else if (process.argv[2] === "seed:clone") {

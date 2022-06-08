@@ -133,7 +133,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.test.ts`,
-        templateFile: `${__dirname}/templates/endpoint.unit-test.hbs`,
+        templateFile: `${__dirname}/templates/endpoint.unit.test.hbs`,
       },
       {
         type: "add",
