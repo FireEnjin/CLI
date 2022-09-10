@@ -35,16 +35,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var connectDatabase_1 = __importDefault(require("../firebase/connectDatabase"));
+var fbAdmin = require("firebase-admin");
 var fs = require("fs");
 var prettier = require("prettier");
 var readline = require("readline");
-var yargs = require("yargs").argv;
+var yargs = require("yargs").default("dir", "".concat(process.cwd(), "/src/seeds")).argv;
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
+    function connectDatabase() {
+        var serviceAccountKey = JSON.parse(fs.readFileSync("".concat(process.cwd(), "/service-account.json"), "utf8"));
+        var project = serviceAccountKey.project_id;
+        fbAdmin.initializeApp({
+            credential: fbAdmin.credential.cert(serviceAccountKey),
+            databaseURL: "https://".concat(project, ".firebaseio.com"),
+            storageBucket: "".concat(project, ".appspot.com"),
+        });
+        return fbAdmin.firestore();
+    }
     function writeData(filename, data) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -279,16 +286,16 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
             });
         });
     }
-    var db, collectionName, documentId, seedsClonedCount, overwrite, seedDir, documentData, collectionData, _i, _a, document_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var db, collectionName, documentId, seedsClonedCount, overwrite, seedDir, documentData, collectionData, _i, collectionData_1, document_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                db = (0, connectDatabase_1.default)();
+                db = connectDatabase();
                 collectionName = yargs._[1] ? yargs._[1].toLowerCase() : null;
                 documentId = yargs.id ? yargs.id : yargs._[2] ? yargs._[2] : null;
                 seedsClonedCount = 0;
                 overwrite = yargs.o || yargs.overwrite || false;
-                seedDir = (yargs === null || yargs === void 0 ? void 0 : yargs.dir) || "".concat(process.cwd(), "/src/seeds");
+                seedDir = yargs.dir;
                 if (!collectionName && seedDir === "".concat(process.cwd(), "/src/seeds")) {
                     console.log("Collection name is required to clone a seed!");
                     return [2 /*return*/, false];
@@ -296,23 +303,23 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                 if (!documentId) return [3 /*break*/, 3];
                 return [4 /*yield*/, getDocument()];
             case 1:
-                documentData = _b.sent();
+                documentData = _a.sent();
                 return [4 /*yield*/, createSeedWithDocumentData(documentData)];
             case 2:
-                _b.sent();
+                _a.sent();
                 return [3 /*break*/, 8];
             case 3: return [4 /*yield*/, getCollection()];
             case 4:
-                collectionData = _b.sent();
-                _i = 0, _a = collectionData || [];
-                _b.label = 5;
+                collectionData = _a.sent();
+                _i = 0, collectionData_1 = collectionData;
+                _a.label = 5;
             case 5:
-                if (!(_i < _a.length)) return [3 /*break*/, 8];
-                document_1 = _a[_i];
+                if (!(_i < collectionData_1.length)) return [3 /*break*/, 8];
+                document_1 = collectionData_1[_i];
                 return [4 /*yield*/, createSeedWithDocumentData(document_1.data(), document_1.id)];
             case 6:
-                _b.sent();
-                _b.label = 7;
+                _a.sent();
+                _a.label = 7;
             case 7:
                 _i++;
                 return [3 /*break*/, 5];

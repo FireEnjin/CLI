@@ -7,6 +7,7 @@ import envCommand from "./commands/env";
 import generateCommand from "./commands/generate";
 import graphql from "./commands/graphql";
 import migrateCommand from "./commands/migrate";
+import prerender from "./commands/prerender";
 import presetsCommand from "./commands/presets";
 import runSeedCommand from "./commands/runSeed";
 import triggers from "./commands/triggers";
@@ -30,6 +31,8 @@ if (process.argv.length > 2) {
     migrateCommand().catch((err) => console.log(err));
   } else if (process.argv[2] === "new") {
     console.log("This command is being reengineered...");
+  } else if (process.argv[2] === "prerender") {
+    prerender().catch((err) => console.log(err));
   } else if (process.argv[2] === "triggers") {
     triggers().catch((err) => console.log(err));
   } else {

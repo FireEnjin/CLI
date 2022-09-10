@@ -1,21 +1,8 @@
 import glob from "tiny-glob";
-import * as fbAdmin from "firebase-admin";
 import * as fs from "fs";
 import * as path from "path";
-
-async function checkForReferences(object: any) {
-  const data = object;
-  for (const key of Object.keys(object)) {
-    const value = object[key];
-    if (value?.constructor?.name === "Timestamp") {
-      data[key] = value.toDate();
-    } else if (typeof value === undefined) {
-      data[key] = null;
-    }
-  }
-
-  return data;
-}
+import checkForReferences from "../firebase/checkForReferences";
+import connectDatabase from "../firebase/connectDatabase";
 
 export default async () => {
   const env = require(`${process.cwd()}/environment.json`);
@@ -24,29 +11,6 @@ export default async () => {
       .readdirSync(source, { withFileTypes: true })
       .filter((dirent) => dirent.isDirectory())
       .map((dirent) => dirent.name);
-
-  function connectDatabase() {
-    const serviceAccountKey = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/service-account.json`, "utf8")
-    );
-    const project = serviceAccountKey.project_id;
-    fbAdmin.initializeApp({
-      credential: fbAdmin.credential.cert(serviceAccountKey),
-      databaseURL: `https://${project}.firebaseio.com`,
-      storageBucket: `${project}.appspot.com`,
-    });
-
-    const firestore = fbAdmin.firestore();
-
-    if (env?.emulate || env?.firestore?.emulate) {
-      firestore.settings({
-        host: env.firestore?.host ? env.firestore.host : "localhost:8080",
-        ssl: !!env.firestore?.ssl,
-      });
-    }
-
-    return firestore;
-  }
 
   let seedCount = 0;
   const seedGlob = (
@@ -64,7 +28,11 @@ export default async () => {
     files.push(...(await glob(seedFolder)));
   }
 
-  const db = connectDatabase();
+  const db = connectDatabase({
+    emulate: !!(env?.emulate || env?.firestore?.emulate),
+    host: env?.firestore?.host,
+    ssl: env?.firestore?.ssl,
+  });
   for (const file of files) {
     try {
       const pathArr = file.split(path.sep);

@@ -63,51 +63,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var tiny_glob_1 = __importDefault(require("tiny-glob"));
-var fbAdmin = __importStar(require("firebase-admin"));
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
-function checkForReferences(object) {
-    var _a;
-    return __awaiter(this, void 0, void 0, function () {
-        var data, _i, _b, key, value;
-        return __generator(this, function (_c) {
-            data = object;
-            for (_i = 0, _b = Object.keys(object); _i < _b.length; _i++) {
-                key = _b[_i];
-                value = object[key];
-                if (((_a = value === null || value === void 0 ? void 0 : value.constructor) === null || _a === void 0 ? void 0 : _a.name) === "Timestamp") {
-                    data[key] = value.toDate();
-                }
-                else if (typeof value === undefined) {
-                    data[key] = null;
-                }
-            }
-            return [2 /*return*/, data];
-        });
-    });
-}
+var checkForReferences_1 = __importDefault(require("../firebase/checkForReferences"));
+var connectDatabase_1 = __importDefault(require("../firebase/connectDatabase"));
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    function connectDatabase() {
-        var _a, _b, _c;
-        var serviceAccountKey = JSON.parse(fs.readFileSync("".concat(process.cwd(), "/service-account.json"), "utf8"));
-        var project = serviceAccountKey.project_id;
-        fbAdmin.initializeApp({
-            credential: fbAdmin.credential.cert(serviceAccountKey),
-            databaseURL: "https://".concat(project, ".firebaseio.com"),
-            storageBucket: "".concat(project, ".appspot.com"),
-        });
-        var firestore = fbAdmin.firestore();
-        if ((env === null || env === void 0 ? void 0 : env.emulate) || ((_a = env === null || env === void 0 ? void 0 : env.firestore) === null || _a === void 0 ? void 0 : _a.emulate)) {
-            firestore.settings({
-                host: ((_b = env.firestore) === null || _b === void 0 ? void 0 : _b.host) ? env.firestore.host : "localhost:8080",
-                ssl: !!((_c = env.firestore) === null || _c === void 0 ? void 0 : _c.ssl),
-            });
-        }
-        return firestore;
-    }
     var env, getDirectories, seedCount, seedGlob, files, _i, seedGlob_1, seedFolder, _a, _b, _c, db, _d, files_1, file, pathArr, currentSeed, _e, isDocument, docRef, i, _f, _g, error_1;
-    return __generator(this, function (_h) {
-        switch (_h.label) {
+    var _h, _j, _k;
+    return __generator(this, function (_l) {
+        switch (_l.label) {
             case 0:
                 env = require("".concat(process.cwd(), "/environment.json"));
                 getDirectories = function (source) {
@@ -126,7 +90,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     .map(function (collection) { return "./dist/seeds/".concat(collection, "/**/*.js"); });
                 files = [];
                 _i = 0, seedGlob_1 = seedGlob;
-                _h.label = 1;
+                _l.label = 1;
             case 1:
                 if (!(_i < seedGlob_1.length)) return [3 /*break*/, 4];
                 seedFolder = seedGlob_1[_i];
@@ -134,31 +98,35 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                 _c = [files];
                 return [4 /*yield*/, (0, tiny_glob_1.default)(seedFolder)];
             case 2:
-                _b.apply(_a, _c.concat([(_h.sent())]));
-                _h.label = 3;
+                _b.apply(_a, _c.concat([(_l.sent())]));
+                _l.label = 3;
             case 3:
                 _i++;
                 return [3 /*break*/, 1];
             case 4:
-                db = connectDatabase();
+                db = (0, connectDatabase_1.default)({
+                    emulate: !!((env === null || env === void 0 ? void 0 : env.emulate) || ((_h = env === null || env === void 0 ? void 0 : env.firestore) === null || _h === void 0 ? void 0 : _h.emulate)),
+                    host: (_j = env === null || env === void 0 ? void 0 : env.firestore) === null || _j === void 0 ? void 0 : _j.host,
+                    ssl: (_k = env === null || env === void 0 ? void 0 : env.firestore) === null || _k === void 0 ? void 0 : _k.ssl,
+                });
                 _d = 0, files_1 = files;
-                _h.label = 5;
+                _l.label = 5;
             case 5:
                 if (!(_d < files_1.length)) return [3 /*break*/, 14];
                 file = files_1[_d];
-                _h.label = 6;
+                _l.label = 6;
             case 6:
-                _h.trys.push([6, 12, , 13]);
+                _l.trys.push([6, 12, , 13]);
                 pathArr = file.split(path.sep);
                 currentSeed = require("".concat(file.replace("dist".concat(path.sep), "".concat(process.cwd()).concat(path.sep, "dist").concat(path.sep)))).default(db);
                 if (!(typeof currentSeed.then === "function")) return [3 /*break*/, 8];
                 return [4 /*yield*/, currentSeed];
             case 7:
-                _e = _h.sent();
+                _e = _l.sent();
                 return [3 /*break*/, 9];
             case 8:
                 _e = currentSeed;
-                _h.label = 9;
+                _l.label = 9;
             case 9:
                 currentSeed = _e;
                 isDocument = pathArr[3].indexOf(".") >= 0;
@@ -175,14 +143,14 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     }
                 }
                 _g = (_f = docRef).set;
-                return [4 /*yield*/, checkForReferences(currentSeed)];
-            case 10: return [4 /*yield*/, _g.apply(_f, [_h.sent()])];
+                return [4 /*yield*/, (0, checkForReferences_1.default)(currentSeed)];
+            case 10: return [4 /*yield*/, _g.apply(_f, [_l.sent()])];
             case 11:
-                _h.sent();
+                _l.sent();
                 seedCount = seedCount + 1;
                 return [3 /*break*/, 13];
             case 12:
-                error_1 = _h.sent();
+                error_1 = _l.sent();
                 console.log("Seed failed to run", file, error_1);
                 return [3 /*break*/, 13];
             case 13:

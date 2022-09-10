@@ -1,33 +1,16 @@
-const fbAdmin = require("firebase-admin");
+import connectDatabase from "../firebase/connectDatabase";
 const fs = require("fs");
 const prettier = require("prettier");
 const readline = require("readline");
-const yargs = require("yargs").default(
-  "dir",
-  `${process.cwd()}/src/seeds`
-).argv;
+const yargs = require("yargs").argv;
 
 export default async () => {
-  function connectDatabase() {
-    const serviceAccountKey = JSON.parse(
-      fs.readFileSync(`${process.cwd()}/service-account.json`, "utf8")
-    );
-    const project = serviceAccountKey.project_id;
-    fbAdmin.initializeApp({
-      credential: fbAdmin.credential.cert(serviceAccountKey),
-      databaseURL: `https://${project}.firebaseio.com`,
-      storageBucket: `${project}.appspot.com`,
-    });
-
-    return fbAdmin.firestore();
-  }
-
   const db = connectDatabase();
   const collectionName = yargs._[1] ? yargs._[1].toLowerCase() : null;
   const documentId = yargs.id ? yargs.id : yargs._[2] ? yargs._[2] : null;
   let seedsClonedCount = 0;
   const overwrite = yargs.o || yargs.overwrite || false;
-  const seedDir = yargs.dir;
+  const seedDir = yargs?.dir || `${process.cwd()}/src/seeds`;
 
   if (!collectionName && seedDir === `${process.cwd()}/src/seeds`) {
     console.log("Collection name is required to clone a seed!");
@@ -223,7 +206,7 @@ export default async () => {
     await createSeedWithDocumentData(documentData);
   } else {
     const collectionData = await getCollection();
-    for (const document of collectionData) {
+    for (const document of collectionData || []) {
       await createSeedWithDocumentData(document.data(), document.id);
     }
   }

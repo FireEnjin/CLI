@@ -34,6 +34,7 @@ var env_1 = __importDefault(require("./commands/env"));
 var generate_1 = __importDefault(require("./commands/generate"));
 var graphql_1 = __importDefault(require("./commands/graphql"));
 var migrate_1 = __importDefault(require("./commands/migrate"));
+var prerender_1 = __importDefault(require("./commands/prerender"));
 var presets_1 = __importDefault(require("./commands/presets"));
 var runSeed_1 = __importDefault(require("./commands/runSeed"));
 var triggers_1 = __importDefault(require("./commands/triggers"));
@@ -64,6 +65,9 @@ if (process.argv.length > 2) {
     }
     else if (process.argv[2] === "new") {
         console.log("This command is being reengineered...");
+    }
+    else if (process.argv[2] === "prerender") {
+        (0, prerender_1.default)().catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "triggers") {
         (0, triggers_1.default)().catch(function (err) { return console.log(err); });
