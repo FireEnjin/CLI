@@ -5,7 +5,12 @@ import renderHandlebarsTemplateToFile from "../helpers/renderHandlebarsTemplateT
 const yargs = require("yargs").argv;
 
 export default async () => {
-  const env = require(`${process.cwd()}/environment.json`);
+  let env: any = {};
+  try {
+    env = require(`${process.cwd()}/environment.json`);
+  } catch (error) {
+    console.log("No environment file found.");
+  }
   const formatWithPrettier =
     yargs?.f || yargs?.format || env?.prerender?.formatWithPrettier || false;
   const dir =

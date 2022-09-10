@@ -36,6 +36,10 @@ This command runs all migrations and stores results in Firestore.
 
 This command will walk you through setting up a new project.
 
+**prerender**
+
+This command will prerender files using Handlebars templates into web directory
+
 **presets**
 
 This command will compile all of your presets into a javascript file.
