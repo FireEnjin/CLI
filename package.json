@@ -21,13 +21,13 @@
     "fireenjin": "dist/index.js"
   },
   "dependencies": {
-    "@fireenjin/graphql": "^1.1.4",
+    "@fireenjin/graphql": "^1.1.6",
     "apollo-server": "^3.6.7",
-    "firebase-admin": "^10.2.0",
-    "inquirer": "^8.2.4",
-    "plop": "^3.1.0",
+    "firebase-admin": "^11.0.1",
+    "inquirer": "^9.1.1",
+    "plop": "^3.1.1",
     "pluralize": "^8.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "recursive-copy": "^2.0.14",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -42,12 +42,12 @@
     "@semantic-release/release-notes-generator": "^10.0.3",
     "@types/jest": "^28.1.1",
     "jest": "^28.1.1",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^19.0.5",
     "ts-jest": "^28.0.4",
-    "ts-node": "^10.8.1",
+    "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "tslint": "^6.1.3",
-    "typescript": "^4.7.3"
+    "typescript": "^4.8.3"
   },
   "repository": {
     "type": "git",

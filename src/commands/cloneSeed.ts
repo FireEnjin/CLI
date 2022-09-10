@@ -132,31 +132,61 @@ export default async () => {
   async function renderSeed(location, seedContent) {
     return new Promise(async (resolve, reject) => {
       fs.readFile(
-        `${__dirname}/../../templates/seed.hbs`,
+        `${process.cwd()}/templates/seed.hbs`,
         "utf8",
-        async (err, data) => {
-          if (err) {
-            console.log(err);
-            reject(err);
-          }
+        async (customErr, customData) => {
+          if (customErr) {
+            fs.readFile(
+              `${__dirname}/../../templates/seed.hbs`,
+              "utf8",
+              async (err, data) => {
+                if (err) {
+                  console.log(err);
+                  reject(err);
+                }
 
-          try {
-            await writeData(
-              location,
-              prettier.format(
-                data
-                  .replace(
-                    /{{modelName}}/g,
-                    collectionName.charAt(0).toUpperCase() +
-                      collectionName.substring(1, collectionName.length - 1)
-                  )
-                  .replace(/{{data}}/g, seedContent)
-              )
+                try {
+                  await writeData(
+                    location,
+                    prettier.format(
+                      data
+                        .replace(
+                          /{{modelName}}/g,
+                          collectionName.charAt(0).toUpperCase() +
+                            collectionName.substring(
+                              1,
+                              collectionName.length - 1
+                            )
+                        )
+                        .replace(/{{data}}/g, seedContent)
+                    )
+                  );
+                  seedsClonedCount++;
+                  resolve(data);
+                } catch (err) {
+                  reject(err);
+                }
+              }
             );
-            seedsClonedCount++;
-            resolve(data);
-          } catch (err) {
-            reject(err);
+          } else {
+            try {
+              await writeData(
+                location,
+                prettier.format(
+                  customData
+                    .replace(
+                      /{{modelName}}/g,
+                      collectionName.charAt(0).toUpperCase() +
+                        collectionName.substring(1, collectionName.length - 1)
+                    )
+                    .replace(/{{data}}/g, seedContent)
+                )
+              );
+              seedsClonedCount++;
+              resolve(customData);
+            } catch (err) {
+              reject(err);
+            }
           }
         }
       );
