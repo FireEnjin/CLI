@@ -1,4 +1,6 @@
 const pluralize = require("pluralize");
+const fs = require("fs");
+const path = require("path");
 const package = require(`${process.env.enjinProjectDir}/package.json`);
 const hasStorybook = Object.keys(package.devDependencies).includes(
   "@storybook/html"
@@ -7,6 +9,22 @@ const hasDocs = Object.keys(package.devDependencies).includes(
   "@fireenjin/docs"
 );
 const enjinSettings = package.enjin ? package.enjin : {};
+let templateDir = enjinSettings?.templateDir || `${__dirname}/templates`;
+
+function getTemplatePath(templateFile) {
+  const customTemplatePath = path.join(
+    process.env.enjinProjectDir,
+    "templates",
+    templateFile
+  );
+  try {
+    return fs.existsSync(customTemplatePath)
+      ? customTemplatePath
+      : `${templateDir}/${templateFile}`;
+  } catch {
+    return `${templateDir}/${templateFile}`;
+  }
+}
 
 function camelize(text) {
   return text.replace(
@@ -100,7 +118,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/inputs/{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/input.hbs`,
+        templateFile: getTemplatePath("input.hbs"),
       },
     ],
   });
@@ -123,37 +141,37 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.input.ts`,
-        templateFile: `${__dirname}/templates/input.hbs`,
+        templateFile: getTemplatePath("input.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.output.ts`,
-        templateFile: `${__dirname}/templates/output.hbs`,
+        templateFile: getTemplatePath("output.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.test.ts`,
-        templateFile: `${__dirname}/templates/endpoint.unit.test.hbs`,
+        templateFile: getTemplatePath("endpoint.unit.test.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/endpoint.unit.hbs`,
+        templateFile: getTemplatePath("endpoint.unit.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/resolvers/{{nameFromPathPascal name}}.ts`,
-        templateFile: `${__dirname}/templates/resolver.hbs`,
+        templateFile: getTemplatePath("resolver.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/triggers/{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/trigger.https.hbs`,
+        templateFile: getTemplatePath("trigger.https.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/{{nameFromPathCamel name}}.gql`,
-        templateFile: `${__dirname}/templates/query.write.hbs`,
+        templateFile: getTemplatePath("query.write.hbs"),
       },
     ],
   });
@@ -175,7 +193,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/resolvers/{{nameFromPathPascal name}}.ts`,
-        templateFile: `${__dirname}/templates/resolver.hbs`,
+        templateFile: getTemplatePath("resolver.hbs"),
       },
     ],
   });
@@ -197,7 +215,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/triggers/{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/trigger.https.hbs`,
+        templateFile: getTemplatePath("trigger.https.hbs"),
       },
     ],
   });
@@ -217,7 +235,7 @@ module.exports = function (plop) {
         path: `${
           process.env.enjinProjectDir
         }/src/migrations/${dateStringToYMD()}_{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/migration.hbs`,
+        templateFile: getTemplatePath("migration.hbs"),
       },
     ],
   });
@@ -252,25 +270,25 @@ module.exports = function (plop) {
     {
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.tsx`,
-      templateFile: `${__dirname}/templates/component.tsx.hbs`,
+      templateFile: getTemplatePath("component.tsx.hbs"),
       data: handlebarsData,
     },
     {
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.css`,
-      templateFile: `${__dirname}/templates/component.css.hbs`,
+      templateFile: getTemplatePath("component.css.hbs"),
       data: handlebarsData,
     },
     {
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.e2e.ts`,
-      templateFile: `${__dirname}/templates/component.e2e.hbs`,
+      templateFile: getTemplatePath("component.e2e.hbs"),
       data: handlebarsData,
     },
     {
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.spec.ts`,
-      templateFile: `${__dirname}/templates/component.spec.hbs`,
+      templateFile: getTemplatePath("component.spec.hbs"),
       data: handlebarsData,
     },
   ];
@@ -278,7 +296,7 @@ module.exports = function (plop) {
     componentActions.push({
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.stories.js`,
-      templateFile: `${__dirname}/templates/component.stories.hbs`,
+      templateFile: getTemplatePath("component.stories.hbs"),
       data: handlebarsData,
     });
   }
@@ -286,7 +304,7 @@ module.exports = function (plop) {
     componentActions.push({
       type: "add",
       path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.presets.js`,
-      templateFile: `${__dirname}/templates/component.presets.hbs`,
+      templateFile: getTemplatePath("component.presets.hbs"),
       data: handlebarsData,
     });
   }
@@ -331,13 +349,13 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.tsx`,
-        templateFile: `${__dirname}/templates/page.{{type}}.tsx.hbs`,
+        templateFile: getTemplatePath("page.{{type}}.tsx.hbs"),
         data: handlebarsData,
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/components/{{dashCase name}}/{{dashCase name}}.css`,
-        templateFile: `${__dirname}/templates/page.{{type}}.css.hbs`,
+        templateFile: getTemplatePath("page.{{type}}.css.hbs"),
         data: handlebarsData,
       },
     ],
@@ -362,22 +380,22 @@ module.exports = function (plop) {
         {
           type: "add",
           path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/{{nameFromPathPascal name}}.ts`,
-          templateFile: `${__dirname}/templates/model.hbs`,
+          templateFile: getTemplatePath("model.hbs"),
         },
         {
           type: "add",
           path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/{{nameFromPathPascal name}}.model.ts`,
-          templateFile: `${__dirname}/templates/model.graphql.hbs`,
+          templateFile: getTemplatePath("model.graphql.hbs"),
         },
         {
           type: "add",
           path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/{{nameFromPathPascal name}}.resolver.ts`,
-          templateFile: `${__dirname}/templates/model.resolver.hbs`,
+          templateFile: getTemplatePath("model.resolver.hbs"),
         },
         {
           type: "add",
           path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/{{nameFromPathPascal name}}.input.ts`,
-          templateFile: `${__dirname}/templates/model.input.hbs`,
+          templateFile: getTemplatePath("model.input.hbs"),
         },
       ];
 
@@ -387,27 +405,27 @@ module.exports = function (plop) {
           {
             type: "add",
             path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/add{{nameFromPathPascal name}}.gql`,
-            templateFile: `${__dirname}/templates/query.add.hbs`,
+            templateFile: getTemplatePath("query.add.hbs"),
           },
           {
             type: "add",
             path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/edit{{nameFromPathPascal name}}.gql`,
-            templateFile: `${__dirname}/templates/query.edit.hbs`,
+            templateFile: getTemplatePath("query.edit.hbs"),
           },
           {
             type: "add",
             path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/delete{{nameFromPathPascal name}}.gql`,
-            templateFile: `${__dirname}/templates/query.delete.hbs`,
+            templateFile: getTemplatePath("query.delete.hbs"),
           },
           {
             type: "add",
             path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/find{{nameFromPathPascal name}}.gql`,
-            templateFile: `${__dirname}/templates/query.find.hbs`,
+            templateFile: getTemplatePath("query.find.hbs"),
           },
           {
             type: "add",
             path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/list{{nameFromPathPascal name}}.gql`,
-            templateFile: `${__dirname}/templates/query.list.hbs`,
+            templateFile: getTemplatePath("query.list.hbs"),
           },
         ];
       }
@@ -428,27 +446,27 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/add{{nameFromPathPascal name}}.gql`,
-        templateFile: `${__dirname}/templates/query.add.hbs`,
+        templateFile: getTemplatePath("query.add.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/edit{{nameFromPathPascal name}}.gql`,
-        templateFile: `${__dirname}/templates/query.edit.hbs`,
+        templateFile: getTemplatePath("query.edit.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/delete{{nameFromPathPascal name}}.gql`,
-        templateFile: `${__dirname}/templates/query.delete.hbs`,
+        templateFile: getTemplatePath("query.delete.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/find{{nameFromPathPascal name}}.gql`,
-        templateFile: `${__dirname}/templates/query.find.hbs`,
+        templateFile: getTemplatePath("query.find.hbs"),
       },
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/list{{nameFromPathPascal name}}.gql`,
-        templateFile: `${__dirname}/templates/query.list.hbs`,
+        templateFile: getTemplatePath("query.list.hbs"),
       },
     ],
   });
@@ -472,7 +490,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/queries/{{nameFromPathCamel name}}.gql`,
-        templateFile: `${__dirname}/templates/query.${data.type}.hbs`,
+        templateFile: getTemplatePath("query.${data.type}.hbs"),
       },
     ],
   });
@@ -494,7 +512,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.ts`,
-        templateFile: `${__dirname}/templates/unit.hbs`,
+        templateFile: getTemplatePath("unit.hbs"),
         data: {
           simple: true,
         },
@@ -502,7 +520,7 @@ module.exports = function (plop) {
       {
         type: "add",
         path: `${process.env.enjinProjectDir}/src/units/{{pathFromName name}}/{{nameFromPathCamel name}}/{{nameFromPathCamel name}}.test.ts`,
-        templateFile: `${__dirname}/templates/unit.test.hbs`,
+        templateFile: getTemplatePath("unit.test.hbs"),
         data: {
           simple: true,
         },
