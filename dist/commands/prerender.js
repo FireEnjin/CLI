@@ -61,7 +61,13 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
     return __generator(this, function (_l) {
         switch (_l.label) {
             case 0:
-                env = require("".concat(process.cwd(), "/environment.json"));
+                env = {};
+                try {
+                    env = require("".concat(process.cwd(), "/environment.json"));
+                }
+                catch (error) {
+                    console.log("No environment file found.");
+                }
                 formatWithPrettier = (yargs === null || yargs === void 0 ? void 0 : yargs.f) || (yargs === null || yargs === void 0 ? void 0 : yargs.format) || ((_b = env === null || env === void 0 ? void 0 : env.prerender) === null || _b === void 0 ? void 0 : _b.formatWithPrettier) || false;
                 dir = (yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.dir) || ((_c = env === null || env === void 0 ? void 0 : env.prerender) === null || _c === void 0 ? void 0 : _c.dir) || "".concat(process.cwd(), "/www");
                 title = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.title) || ((_d = env === null || env === void 0 ? void 0 : env.prerender) === null || _d === void 0 ? void 0 : _d.title);
