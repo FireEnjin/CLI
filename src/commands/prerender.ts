@@ -14,7 +14,9 @@ export default async () => {
   const formatWithPrettier =
     yargs?.f || yargs?.format || env?.prerender?.formatWithPrettier || false;
   const dir =
-    yargs?.d || yargs?.dir || env?.prerender?.dir || `${process.cwd()}/www`;
+    yargs?.d || yargs?.dir || env?.prerender?.dir
+      ? `${process.cwd()}/${yargs?.d || yargs?.dir || env?.prerender?.dir}`
+      : `${process.cwd()}/www`;
   const title = yargs?.t || yargs?.title || env?.prerender?.title;
   const head = yargs?.h || yargs?.head || env?.prerender?.head || "";
   const body = yargs?.b || yargs?.body || env?.prerender?.body || "";
@@ -22,9 +24,8 @@ export default async () => {
     yargs?.f || yargs?.file || env?.prerender?.templateFile || "index.hbs";
   const outFile =
     yargs?.o || yargs?.out || env?.prerender?.outFile || "index.html";
-  const data = jsonStringToObject(
-    yargs?.d || yargs?.data || env?.prerender?.data
-  );
+  const data =
+    jsonStringToObject(yargs?.d || yargs?.data) || env?.prerender?.data;
   const partialsPath =
     yargs?.p ||
     yargs?.partials ||

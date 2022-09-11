@@ -57,9 +57,9 @@ var renderHandlebarsTemplateToFile_1 = __importDefault(require("../helpers/rende
 var yargs = require("yargs").argv;
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
     var env, formatWithPrettier, dir, title, head, body, file, outFile, data, partialsPath, partialFilenames, partials, _i, _a, filename, filenameParts;
-    var _b, _c, _d, _e, _f, _g, _h, _j, _k;
-    return __generator(this, function (_l) {
-        switch (_l.label) {
+    var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    return __generator(this, function (_m) {
+        switch (_m.label) {
             case 0:
                 env = {};
                 try {
@@ -69,20 +69,22 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     console.log("No environment file found.");
                 }
                 formatWithPrettier = (yargs === null || yargs === void 0 ? void 0 : yargs.f) || (yargs === null || yargs === void 0 ? void 0 : yargs.format) || ((_b = env === null || env === void 0 ? void 0 : env.prerender) === null || _b === void 0 ? void 0 : _b.formatWithPrettier) || false;
-                dir = (yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.dir) || ((_c = env === null || env === void 0 ? void 0 : env.prerender) === null || _c === void 0 ? void 0 : _c.dir) || "".concat(process.cwd(), "/www");
-                title = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.title) || ((_d = env === null || env === void 0 ? void 0 : env.prerender) === null || _d === void 0 ? void 0 : _d.title);
-                head = (yargs === null || yargs === void 0 ? void 0 : yargs.h) || (yargs === null || yargs === void 0 ? void 0 : yargs.head) || ((_e = env === null || env === void 0 ? void 0 : env.prerender) === null || _e === void 0 ? void 0 : _e.head) || "";
-                body = (yargs === null || yargs === void 0 ? void 0 : yargs.b) || (yargs === null || yargs === void 0 ? void 0 : yargs.body) || ((_f = env === null || env === void 0 ? void 0 : env.prerender) === null || _f === void 0 ? void 0 : _f.body) || "";
-                file = (yargs === null || yargs === void 0 ? void 0 : yargs.f) || (yargs === null || yargs === void 0 ? void 0 : yargs.file) || ((_g = env === null || env === void 0 ? void 0 : env.prerender) === null || _g === void 0 ? void 0 : _g.templateFile) || "index.hbs";
-                outFile = (yargs === null || yargs === void 0 ? void 0 : yargs.o) || (yargs === null || yargs === void 0 ? void 0 : yargs.out) || ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.outFile) || "index.html";
-                data = (0, jsonStringToObject_1.default)((yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.data) || ((_j = env === null || env === void 0 ? void 0 : env.prerender) === null || _j === void 0 ? void 0 : _j.data));
+                dir = (yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.dir) || ((_c = env === null || env === void 0 ? void 0 : env.prerender) === null || _c === void 0 ? void 0 : _c.dir)
+                    ? "".concat(process.cwd(), "/").concat((yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.dir) || ((_d = env === null || env === void 0 ? void 0 : env.prerender) === null || _d === void 0 ? void 0 : _d.dir))
+                    : "".concat(process.cwd(), "/www");
+                title = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.title) || ((_e = env === null || env === void 0 ? void 0 : env.prerender) === null || _e === void 0 ? void 0 : _e.title);
+                head = (yargs === null || yargs === void 0 ? void 0 : yargs.h) || (yargs === null || yargs === void 0 ? void 0 : yargs.head) || ((_f = env === null || env === void 0 ? void 0 : env.prerender) === null || _f === void 0 ? void 0 : _f.head) || "";
+                body = (yargs === null || yargs === void 0 ? void 0 : yargs.b) || (yargs === null || yargs === void 0 ? void 0 : yargs.body) || ((_g = env === null || env === void 0 ? void 0 : env.prerender) === null || _g === void 0 ? void 0 : _g.body) || "";
+                file = (yargs === null || yargs === void 0 ? void 0 : yargs.f) || (yargs === null || yargs === void 0 ? void 0 : yargs.file) || ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.templateFile) || "index.hbs";
+                outFile = (yargs === null || yargs === void 0 ? void 0 : yargs.o) || (yargs === null || yargs === void 0 ? void 0 : yargs.out) || ((_j = env === null || env === void 0 ? void 0 : env.prerender) === null || _j === void 0 ? void 0 : _j.outFile) || "index.html";
+                data = (0, jsonStringToObject_1.default)((yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.data)) || ((_k = env === null || env === void 0 ? void 0 : env.prerender) === null || _k === void 0 ? void 0 : _k.data);
                 partialsPath = (yargs === null || yargs === void 0 ? void 0 : yargs.p) ||
                     (yargs === null || yargs === void 0 ? void 0 : yargs.partials) ||
-                    ((_k = env === null || env === void 0 ? void 0 : env.prerender) === null || _k === void 0 ? void 0 : _k.partials) ||
+                    ((_l = env === null || env === void 0 ? void 0 : env.prerender) === null || _l === void 0 ? void 0 : _l.partials) ||
                     "".concat(process.cwd(), "/templates/partials");
                 return [4 /*yield*/, (0, readFilesToArray_1.default)(partialsPath)];
             case 1:
-                partialFilenames = _l.sent();
+                partialFilenames = _m.sent();
                 partials = [];
                 for (_i = 0, _a = partialFilenames || []; _i < _a.length; _i++) {
                     filename = _a[_i];
@@ -105,7 +107,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                         partials: partials,
                     })];
             case 2:
-                _l.sent();
+                _m.sent();
                 return [2 /*return*/, true];
         }
     });
