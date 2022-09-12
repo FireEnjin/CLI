@@ -20,8 +20,8 @@ export default async () => {
   const title = yargs?.t || yargs?.title || env?.prerender?.title;
   const head = yargs?.h || yargs?.head || env?.prerender?.head || "";
   const body = yargs?.b || yargs?.body || env?.prerender?.body || "";
-  const file =
-    yargs?.f || yargs?.file || env?.prerender?.templateFile || "index.hbs";
+  const template =
+    yargs?.t || yargs?.template || env?.prerender?.templateFile || "index.hbs";
   const outFile =
     yargs?.o || yargs?.out || env?.prerender?.outFile || "index.html";
   const data =
@@ -33,6 +33,10 @@ export default async () => {
     `${process.cwd()}/templates/partials`;
   const partialFilenames = await readFilesToArray(partialsPath);
   const partials: { id: string; html: string }[] = [];
+  const templatesDir =
+    yargs?.templatesDir ||
+    env?.prerender?.templatesDir ||
+    `${process.cwd()}/templates`;
   for (const filename of partialFilenames || []) {
     const filenameParts = filename.split(".");
     if (filenameParts?.length > 1) filenameParts.pop();
@@ -45,7 +49,7 @@ export default async () => {
       console.log(`Error loading partial ${filename}: `, e);
     }
   }
-  await renderHandlebarsTemplateToFile(file, `${dir}/${outFile}`, {
+  await renderHandlebarsTemplateToFile(template, `${dir}/${outFile}`, {
     data: {
       ...(data || {}),
       title,
@@ -54,6 +58,10 @@ export default async () => {
     },
     formatWithPrettier,
     partials,
+    templatesDir:
+      [".", "./", "/"].includes(templatesDir) || template !== "index.hbs"
+        ? process.cwd()
+        : templatesDir,
   });
 
   return true;

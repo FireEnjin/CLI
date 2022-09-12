@@ -56,10 +56,10 @@ var readFilesToArray_1 = __importDefault(require("../helpers/readFilesToArray"))
 var renderHandlebarsTemplateToFile_1 = __importDefault(require("../helpers/renderHandlebarsTemplateToFile"));
 var yargs = require("yargs").argv;
 exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var env, formatWithPrettier, dir, title, head, body, file, outFile, data, partialsPath, partialFilenames, partials, _i, _a, filename, filenameParts;
-    var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
-    return __generator(this, function (_m) {
-        switch (_m.label) {
+    var env, formatWithPrettier, dir, title, head, body, template, outFile, data, partialsPath, partialFilenames, partials, templatesDir, _i, _a, filename, filenameParts;
+    var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+    return __generator(this, function (_o) {
+        switch (_o.label) {
             case 0:
                 env = {};
                 try {
@@ -75,7 +75,7 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                 title = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.title) || ((_e = env === null || env === void 0 ? void 0 : env.prerender) === null || _e === void 0 ? void 0 : _e.title);
                 head = (yargs === null || yargs === void 0 ? void 0 : yargs.h) || (yargs === null || yargs === void 0 ? void 0 : yargs.head) || ((_f = env === null || env === void 0 ? void 0 : env.prerender) === null || _f === void 0 ? void 0 : _f.head) || "";
                 body = (yargs === null || yargs === void 0 ? void 0 : yargs.b) || (yargs === null || yargs === void 0 ? void 0 : yargs.body) || ((_g = env === null || env === void 0 ? void 0 : env.prerender) === null || _g === void 0 ? void 0 : _g.body) || "";
-                file = (yargs === null || yargs === void 0 ? void 0 : yargs.f) || (yargs === null || yargs === void 0 ? void 0 : yargs.file) || ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.templateFile) || "index.hbs";
+                template = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.template) || ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.templateFile) || "index.hbs";
                 outFile = (yargs === null || yargs === void 0 ? void 0 : yargs.o) || (yargs === null || yargs === void 0 ? void 0 : yargs.out) || ((_j = env === null || env === void 0 ? void 0 : env.prerender) === null || _j === void 0 ? void 0 : _j.outFile) || "index.html";
                 data = (0, jsonStringToObject_1.default)((yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.data)) || ((_k = env === null || env === void 0 ? void 0 : env.prerender) === null || _k === void 0 ? void 0 : _k.data);
                 partialsPath = (yargs === null || yargs === void 0 ? void 0 : yargs.p) ||
@@ -84,8 +84,11 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                     "".concat(process.cwd(), "/templates/partials");
                 return [4 /*yield*/, (0, readFilesToArray_1.default)(partialsPath)];
             case 1:
-                partialFilenames = _m.sent();
+                partialFilenames = _o.sent();
                 partials = [];
+                templatesDir = (yargs === null || yargs === void 0 ? void 0 : yargs.templatesDir) ||
+                    ((_m = env === null || env === void 0 ? void 0 : env.prerender) === null || _m === void 0 ? void 0 : _m.templatesDir) ||
+                    "".concat(process.cwd(), "/templates");
                 for (_i = 0, _a = partialFilenames || []; _i < _a.length; _i++) {
                     filename = _a[_i];
                     filenameParts = filename.split(".");
@@ -101,13 +104,16 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                         console.log("Error loading partial ".concat(filename, ": "), e);
                     }
                 }
-                return [4 /*yield*/, (0, renderHandlebarsTemplateToFile_1.default)(file, "".concat(dir, "/").concat(outFile), {
+                return [4 /*yield*/, (0, renderHandlebarsTemplateToFile_1.default)(template, "".concat(dir, "/").concat(outFile), {
                         data: __assign(__assign({}, (data || {})), { title: title, head: head, body: body }),
                         formatWithPrettier: formatWithPrettier,
                         partials: partials,
+                        templatesDir: [".", "./", "/"].includes(templatesDir) || template !== "index.hbs"
+                            ? process.cwd()
+                            : templatesDir,
                     })];
             case 2:
-                _m.sent();
+                _o.sent();
                 return [2 /*return*/, true];
         }
     });
