@@ -75,7 +75,11 @@ exports.default = (function () { return __awaiter(void 0, void 0, void 0, functi
                 title = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.title) || ((_e = env === null || env === void 0 ? void 0 : env.prerender) === null || _e === void 0 ? void 0 : _e.title);
                 head = (yargs === null || yargs === void 0 ? void 0 : yargs.h) || (yargs === null || yargs === void 0 ? void 0 : yargs.head) || ((_f = env === null || env === void 0 ? void 0 : env.prerender) === null || _f === void 0 ? void 0 : _f.head) || "";
                 body = (yargs === null || yargs === void 0 ? void 0 : yargs.b) || (yargs === null || yargs === void 0 ? void 0 : yargs.body) || ((_g = env === null || env === void 0 ? void 0 : env.prerender) === null || _g === void 0 ? void 0 : _g.body) || "";
-                template = (yargs === null || yargs === void 0 ? void 0 : yargs.t) || (yargs === null || yargs === void 0 ? void 0 : yargs.template) || ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.templateFile) || "index.hbs";
+                template = (yargs === null || yargs === void 0 ? void 0 : yargs.i) ||
+                    (yargs === null || yargs === void 0 ? void 0 : yargs.in) ||
+                    (yargs === null || yargs === void 0 ? void 0 : yargs.template) ||
+                    ((_h = env === null || env === void 0 ? void 0 : env.prerender) === null || _h === void 0 ? void 0 : _h.templateFile) ||
+                    "index.hbs";
                 outFile = (yargs === null || yargs === void 0 ? void 0 : yargs.o) || (yargs === null || yargs === void 0 ? void 0 : yargs.out) || ((_j = env === null || env === void 0 ? void 0 : env.prerender) === null || _j === void 0 ? void 0 : _j.outFile) || "index.html";
                 data = (0, jsonStringToObject_1.default)((yargs === null || yargs === void 0 ? void 0 : yargs.d) || (yargs === null || yargs === void 0 ? void 0 : yargs.data)) || ((_k = env === null || env === void 0 ? void 0 : env.prerender) === null || _k === void 0 ? void 0 : _k.data);
                 partialsPath = (yargs === null || yargs === void 0 ? void 0 : yargs.p) ||

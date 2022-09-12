@@ -21,7 +21,11 @@ export default async () => {
   const head = yargs?.h || yargs?.head || env?.prerender?.head || "";
   const body = yargs?.b || yargs?.body || env?.prerender?.body || "";
   const template =
-    yargs?.t || yargs?.template || env?.prerender?.templateFile || "index.hbs";
+    yargs?.i ||
+    yargs?.in ||
+    yargs?.template ||
+    env?.prerender?.templateFile ||
+    "index.hbs";
   const outFile =
     yargs?.o || yargs?.out || env?.prerender?.outFile || "index.html";
   const data =
