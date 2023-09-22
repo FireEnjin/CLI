@@ -11,30 +11,41 @@ import prerender from "./commands/prerender";
 import presetsCommand from "./commands/presets";
 import runSeedCommand from "./commands/runSeed";
 import triggers from "./commands/triggers";
+import { BuildSchemaOptions } from "type-graphql";
 
 if (process.argv.length > 2) {
+  let config: {
+    graphql?: {
+      build?: BuildSchemaOptions;
+    };
+  } = {};
+  try {
+    config = JSON.parse(fs.readFileSync(`${process.cwd()}/.fireenjin`, "utf8"));
+  } catch (error) {
+    console.log("No .fireenjin found or error parsing");
+  }
   if (process.argv[2] === "copy") {
-    copyCommand().catch((err) => console.log(err));
+    copyCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "gql") {
-    graphql().catch((err) => console.log(err));
+    graphql(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "generate") {
-    generateCommand().catch((err) => console.log(err));
+    generateCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "seed:clone") {
-    cloneSeedCommand().catch((err) => console.log(err));
+    cloneSeedCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "seed") {
-    runSeedCommand().catch((err) => console.log(err));
+    runSeedCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "presets") {
-    presetsCommand().catch((err) => console.log(err));
+    presetsCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "env") {
-    envCommand().catch((err) => console.log(err));
+    envCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "migrate") {
-    migrateCommand().catch((err) => console.log(err));
+    migrateCommand(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "new") {
     console.log("This command is being reengineered...");
   } else if (process.argv[2] === "prerender") {
-    prerender().catch((err) => console.log(err));
+    prerender(config).catch((err) => console.log(err));
   } else if (process.argv[2] === "triggers") {
-    triggers().catch((err) => console.log(err));
+    triggers(config).catch((err) => console.log(err));
   } else {
     console.log(`${process.argv[2]} command doesn't exist!`);
   }

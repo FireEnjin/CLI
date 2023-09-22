@@ -1,2 +1,2 @@
-declare const _default: () => Promise<boolean>;
+declare const _default: (config: any) => Promise<boolean>;
 export default _default;

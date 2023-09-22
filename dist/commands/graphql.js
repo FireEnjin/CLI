@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -40,23 +40,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var buildSchema_1 = __importDefault(require("../grapqhl/buildSchema"));
-var fs_1 = __importDefault(require("fs"));
-exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var fireenjinConfig, task;
+exports.default = (function (config) { return __awaiter(void 0, void 0, void 0, function () {
+    var task;
     var _a;
     return __generator(this, function (_b) {
-        fireenjinConfig = {};
-        try {
-            fireenjinConfig = JSON.parse(fs_1.default.readFileSync("".concat(process.cwd(), "/.fireenjin"), "utf8"));
-        }
-        catch (error) {
-            console.log("No .fireenjin found or error parsing");
-        }
         task = process.argv[3];
         if (task === "start") {
         }
         else {
-            (0, buildSchema_1.default)((_a = fireenjinConfig === null || fireenjinConfig === void 0 ? void 0 : fireenjinConfig.graphql) === null || _a === void 0 ? void 0 : _a.build);
+            (0, buildSchema_1.default)(((_a = config === null || config === void 0 ? void 0 : config.graphql) === null || _a === void 0 ? void 0 : _a.build) || {});
         }
         return [2 /*return*/];
     });

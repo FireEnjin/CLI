@@ -16,7 +16,7 @@ function connectDatabase() {
   return admin.firestore();
 }
 
-export default async () => {
+export default async (config: any) => {
   let migrationCount = 0;
   const dryRun = process.argv[3] && process.argv[3] === "dry" ? true : false;
   glob(`./dist/migrations/**/*.js`, { cwd: process.cwd() }).then(
@@ -24,10 +24,9 @@ export default async () => {
       const db = connectDatabase();
       for (const file of files) {
         const pathArr = file.split("/");
-        let currentMigration = require(`${file.replace(
-          "./",
-          process.cwd() + "/"
-        )}`).default(db, dryRun);
+        let currentMigration = require(
+          `${file.replace("./", process.cwd() + "/")}`
+        ).default(db, dryRun);
         const migrationName = pathArr[pathArr.length - 1].split(".")[0];
 
         currentMigration =

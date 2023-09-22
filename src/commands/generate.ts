@@ -1,7 +1,7 @@
 const { spawn } = require("child_process");
 const path = require("path");
 
-export default async () => {
+export default async (config: any) => {
   process.env.enjinProjectDir = process.cwd();
   spawn(
     /^win/.test(process.platform) ? "npm.cmd" : "npm",

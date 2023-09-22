@@ -39,38 +39,45 @@ var presets_1 = __importDefault(require("./commands/presets"));
 var runSeed_1 = __importDefault(require("./commands/runSeed"));
 var triggers_1 = __importDefault(require("./commands/triggers"));
 if (process.argv.length > 2) {
+    var config = {};
+    try {
+        config = JSON.parse(fs.readFileSync("".concat(process.cwd(), "/.fireenjin"), "utf8"));
+    }
+    catch (error) {
+        console.log("No .fireenjin found or error parsing");
+    }
     if (process.argv[2] === "copy") {
-        (0, copy_1.default)().catch(function (err) { return console.log(err); });
+        (0, copy_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "gql") {
-        (0, graphql_1.default)().catch(function (err) { return console.log(err); });
+        (0, graphql_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "generate") {
-        (0, generate_1.default)().catch(function (err) { return console.log(err); });
+        (0, generate_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "seed:clone") {
-        (0, cloneSeed_1.default)().catch(function (err) { return console.log(err); });
+        (0, cloneSeed_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "seed") {
-        (0, runSeed_1.default)().catch(function (err) { return console.log(err); });
+        (0, runSeed_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "presets") {
-        (0, presets_1.default)().catch(function (err) { return console.log(err); });
+        (0, presets_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "env") {
-        (0, env_1.default)().catch(function (err) { return console.log(err); });
+        (0, env_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "migrate") {
-        (0, migrate_1.default)().catch(function (err) { return console.log(err); });
+        (0, migrate_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "new") {
         console.log("This command is being reengineered...");
     }
     else if (process.argv[2] === "prerender") {
-        (0, prerender_1.default)().catch(function (err) { return console.log(err); });
+        (0, prerender_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else if (process.argv[2] === "triggers") {
-        (0, triggers_1.default)().catch(function (err) { return console.log(err); });
+        (0, triggers_1.default)(config).catch(function (err) { return console.log(err); });
     }
     else {
         console.log("".concat(process.argv[2], " command doesn't exist!"));

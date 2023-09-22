@@ -4,7 +4,7 @@ const prettier = require("prettier");
 const readline = require("readline");
 const yargs = require("yargs").argv;
 
-export default async () => {
+export default async (config: any) => {
   const db = connectDatabase();
   const collectionName = yargs._[1] ? yargs._[1].toLowerCase() : null;
   const documentId = yargs.id ? yargs.id : yargs._[2] ? yargs._[2] : null;

@@ -40,7 +40,7 @@ function replaceModelName(data, modelName) {
     .replace(/{{camelCase modelName}}/g, modelName);
 }
 
-export default async () => {
+export default async (config: any) => {
   let importStr = ``;
   let exportStr = ``;
   let endpointStr = ``;
@@ -53,11 +53,17 @@ export default async () => {
 
   // CHECK FOR CUSTOM RESOLVERS
   try {
-    fs.readdir(`${process.cwd()}/dist/resolvers/`, (err, files) => {
-      files.forEach((file) => {
-        skipResolvers.push(file.split(".")[0].toLowerCase());
-      });
-    });
+    fs.readdir(
+      config?.express?.resolverDir
+        ? `${process.cwd()}/${config?.express?.resolverDir}`
+        : `${process.cwd()}/dist/resolvers/`,
+      (err, files) => {
+        if (!err)
+          files.forEach((file) => {
+            skipResolvers.push(file.split(".")[0].toLowerCase());
+          });
+      }
+    );
   } catch (err) {
     console.log("error getting resolver...");
   }

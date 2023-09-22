@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -66,7 +66,7 @@ var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
 var tiny_glob_1 = __importDefault(require("tiny-glob"));
 var currentEnv = process.argv[3] ? process.argv[3] : "local";
-exports.default = (function () { return __awaiter(void 0, void 0, void 0, function () {
+exports.default = (function (config) { return __awaiter(void 0, void 0, void 0, function () {
     var _i, _a, file, fileDest;
     return __generator(this, function (_b) {
         switch (_b.label) {

@@ -14,7 +14,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -42,7 +42,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 var path_1 = __importDefault(require("path"));
 var graphql_1 = require("@fireenjin/graphql");
-var apollo_server_1 = require("apollo-server");
 var type_graphql_1 = require("type-graphql");
 function main(_a) {
     var _b = _a === void 0 ? {} : _a, authChecker = _b.authChecker, schemaPath = _b.schemaPath, schemaComments = _b.schemaComments, emitSchema = _b.emitSchema, introspection = _b.introspection;
@@ -55,7 +54,7 @@ function main(_a) {
                     db = (0, graphql_1.connectFirestore)({
                         serviceAccount: true,
                     });
-                    server = new apollo_server_1.ApolloServer({
+                    server = new ApolloServer({
                         context: function (_a) {
                             var req = _a.req, res = _a.res;
                             return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_b) {

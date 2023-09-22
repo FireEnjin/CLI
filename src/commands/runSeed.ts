@@ -4,7 +4,7 @@ import * as path from "path";
 import checkForReferences from "../firebase/checkForReferences";
 import connectDatabase from "../firebase/connectDatabase";
 
-export default async () => {
+export default async (config: any) => {
   const env = require(`${process.cwd()}/environment.json`);
   const getDirectories = (source) =>
     fs
@@ -36,10 +36,12 @@ export default async () => {
   for (const file of files) {
     try {
       const pathArr = file.split(path.sep);
-      let currentSeed = require(`${file.replace(
-        `dist${path.sep}`,
-        `${process.cwd()}${path.sep}dist${path.sep}`
-      )}`).default(db);
+      let currentSeed = require(
+        `${file.replace(
+          `dist${path.sep}`,
+          `${process.cwd()}${path.sep}dist${path.sep}`
+        )}`
+      ).default(db);
       currentSeed =
         typeof currentSeed.then === "function"
           ? await currentSeed

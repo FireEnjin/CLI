@@ -4,7 +4,7 @@ import readFilesToArray from "../helpers/readFilesToArray";
 import renderHandlebarsTemplateToFile from "../helpers/renderHandlebarsTemplateToFile";
 const yargs = require("yargs").argv;
 
-export default async () => {
+export default async (config: any) => {
   let env: any = {};
   try {
     env = require(`${process.cwd()}/environment.json`);

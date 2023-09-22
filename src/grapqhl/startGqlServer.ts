@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import path from "path";
 import { connectFirestore, session } from "@fireenjin/graphql";
-import { ApolloServer } from "apollo-server";
+// import { ApolloServer } from "apollo-server";
+declare var ApolloServer;
 import { buildSchemaSync } from "type-graphql";
 
 async function main({

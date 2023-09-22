@@ -4,7 +4,7 @@ import glob from "tiny-glob";
 
 const currentEnv = process.argv[3] ? process.argv[3] : "local";
 
-export default async () => {
+export default async (config: any) => {
   console.log(`Running ${currentEnv} environment setup by copying files...`);
   for (const file of await glob(`./env/${currentEnv}/**/*.*`)) {
     const fileDest =

@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import { buildSchemaSync, BuildSchemaOptions } from "type-graphql";
 
-export default (
-  config: BuildSchemaOptions = {
+export default (config: Partial<BuildSchemaOptions> = {}) => {
+  return buildSchemaSync({
     resolvers: [
       process.cwd() + "/dist/models/**/*.js",
       process.cwd() + "/dist/resolvers/**/*.js",
@@ -14,7 +14,6 @@ export default (
     },
     globalMiddlewares: [],
     nullableByDefault: true,
-  }
-) => {
-  return buildSchemaSync(config);
+    ...(config || {}),
+  });
 };

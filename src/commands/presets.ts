@@ -1,7 +1,7 @@
 import glob from "tiny-glob";
 import { exec } from "child_process";
 
-export default async () => {
+export default async (config: any) => {
   const entries = await glob("src/**/*.presets.ts");
   if (!entries?.length) throw new Error("No presets found...");
   const command = `tsc ${[__dirname + "/presetsDefine.js", ...entries].join(
