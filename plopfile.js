@@ -445,27 +445,27 @@ module.exports = function (plop) {
     actions: (data) => [
       {
         type: "add",
-        path: `${process.env.enjinProjectDir}/src/queries/add{{nameFromPathPascal name}}.gql`,
+        path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/add{{nameFromPathPascal name}}.gql`,
         templateFile: getTemplatePath("query.add.hbs"),
       },
       {
         type: "add",
-        path: `${process.env.enjinProjectDir}/src/queries/edit{{nameFromPathPascal name}}.gql`,
+        path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/edit{{nameFromPathPascal name}}.gql`,
         templateFile: getTemplatePath("query.edit.hbs"),
       },
       {
         type: "add",
-        path: `${process.env.enjinProjectDir}/src/queries/delete{{nameFromPathPascal name}}.gql`,
+        path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/delete{{nameFromPathPascal name}}.gql`,
         templateFile: getTemplatePath("query.delete.hbs"),
       },
       {
         type: "add",
-        path: `${process.env.enjinProjectDir}/src/queries/find{{nameFromPathPascal name}}.gql`,
+        path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/find{{nameFromPathPascal name}}.gql`,
         templateFile: getTemplatePath("query.find.hbs"),
       },
       {
         type: "add",
-        path: `${process.env.enjinProjectDir}/src/queries/list{{nameFromPathPascal name}}.gql`,
+        path: `${process.env.enjinProjectDir}/src/models/{{nameFromPathPascal name}}/queries/list{{nameFromPathPascal name}}.gql`,
         templateFile: getTemplatePath("query.list.hbs"),
       },
     ],

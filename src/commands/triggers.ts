@@ -100,7 +100,7 @@ export default async (config: any) => {
           endpointStr += `app.get("/${camelize(
             modelName
           )}/:id", async (req, res) => {
-  const model = new ${modelName}.${modelName}Model();
+  const model = new ${modelName}.default();
   if (
     model.onAuth &&
     typeof model.onAuth === "function" &&
@@ -143,7 +143,7 @@ export default async (config: any) => {
           endpointStr += `app.get("/${camelize(
             modelName
           )}",  async (req, res) => {
-  const model = new ${modelName}.${modelName}Model();
+  const model = new ${modelName}.default();
   if (
     model.onAuth &&
     typeof model.onAuth === "function" &&
@@ -185,7 +185,7 @@ export default async (config: any) => {
   if (typeof requestInput === "string") return res.status(400).send({
     message: "Invalid doc data input!"
   });
-  const model = new ${modelName}.${modelName}Model();
+  const model = new ${modelName}.default();
   if (
     model.onAuth &&
     typeof model.onAuth === "function" &&
@@ -239,7 +239,7 @@ export default async (config: any) => {
   if (typeof requestInput === "string") return res.status(400).send({
     message: "Invalid doc data input!"
   });
-  const model = new ${modelName}.${modelName}Model();
+  const model = new ${modelName}.default();
   if (
     model.onAuth &&
     typeof model.onAuth === "function" &&
@@ -260,7 +260,7 @@ export default async (config: any) => {
     });
   }
 
-  const doc = await model.update({ id: req.params.id, ...requestInput });
+  const doc = await model.update({ id: req.params.id, ...docData });
   
   return res.send(
     await cleanData(
@@ -296,7 +296,7 @@ export default async (config: any) => {
   if (typeof requestInput === "string") return res.status(400).send({
     message: "Invalid doc data input!"
   });
-  const model = new ${modelName}.${modelName}Model();
+  const model = new ${modelName}.default();
   if (
     model.onAuth &&
     typeof model.onAuth === "function" &&
@@ -307,11 +307,11 @@ export default async (config: any) => {
     });
   const modelBefore = await model.find(req.params.id);
   if (model.onBeforeDelete && typeof model.onBeforeDelete === "function") {
-    const res = await model.onBeforeDelete({
+    const delData = await model.onBeforeDelete({
       id: req.params.id,
       ...modelBefore
     }, hookOptions);
-    if (res === false) {
+    if (delData === false) {
       return res.status(400).send({
         message: "No data for doc!"
       });
@@ -337,7 +337,7 @@ export default async (config: any) => {
   }
 
   for (const modelName of Object.keys(models)) {
-    importStr += `const ${modelName} = require("./models/${modelName}");\n`;
+    importStr += `const ${modelName} = require("./models/${modelName}/${modelName}.model");\n`;
   }
 
   try {
