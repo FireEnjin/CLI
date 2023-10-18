@@ -38,7 +38,7 @@ This command will walk you through setting up a new project.
 
 **prerender**
 
-This command will prerender files using Handlebars templates into web directory
+This command will prerender files using Handlebars templates into web directory.
 
 **presets**
 
