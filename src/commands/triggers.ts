@@ -9,18 +9,28 @@ async function renderToFile(
   dataFilter: (data) => string
 ) {
   return new Promise(async (resolve, reject) => {
-    fs.readFile(
-      `${__dirname}/../../templates/${templateName}.hbs`,
-      "utf8",
-      async (_err: any, data: any) => {
-        try {
-          fs.writeFileSync(location, dataFilter(data));
-          resolve(data);
-        } catch (err) {
-          reject(err);
-        }
+    let templateFile = `${__dirname}/../../templates/${templateName}.hbs`;
+    try {
+      if (fs.existsSync(process.cwd() + `/templates/${templateName}.hbs`)) {
+        templateFile = process.cwd() + `/templates/${templateName}.hbs`;
+      } else if (fs.existsSync(process.cwd() + `/${templateName}.hbs`)) {
+        templateFile = path.join(
+          process.cwd(),
+          "../.fireenjin/templates",
+          `/${templateName}.hbs`
+        );
       }
-    );
+    } catch (err) {
+      console.error(err);
+    }
+    fs.readFile(templateFile, "utf8", async (_err: any, data: any) => {
+      try {
+        fs.writeFileSync(location, dataFilter(data));
+        resolve(data);
+      } catch (err) {
+        reject(err);
+      }
+    });
   });
 }
 

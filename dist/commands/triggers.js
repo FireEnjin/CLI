@@ -71,9 +71,22 @@ function renderToFile(templateName, location, dataFilter) {
         var _this = this;
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                    var templateFile;
                     var _this = this;
                     return __generator(this, function (_a) {
-                        fs.readFile("".concat(__dirname, "/../../templates/").concat(templateName, ".hbs"), "utf8", function (_err, data) { return __awaiter(_this, void 0, void 0, function () {
+                        templateFile = "".concat(__dirname, "/../../templates/").concat(templateName, ".hbs");
+                        try {
+                            if (fs.existsSync(process.cwd() + "/templates/".concat(templateName, ".hbs"))) {
+                                templateFile = process.cwd() + "/templates/".concat(templateName, ".hbs");
+                            }
+                            else if (fs.existsSync(process.cwd() + "/".concat(templateName, ".hbs"))) {
+                                templateFile = path_1.default.join(process.cwd(), "../.fireenjin/templates", "/".concat(templateName, ".hbs"));
+                            }
+                        }
+                        catch (err) {
+                            console.error(err);
+                        }
+                        fs.readFile(templateFile, "utf8", function (_err, data) { return __awaiter(_this, void 0, void 0, function () {
                             return __generator(this, function (_a) {
                                 try {
                                     fs.writeFileSync(location, dataFilter(data));
