@@ -183,58 +183,64 @@ exports.default = (function (config) { return __awaiter(void 0, void 0, void 0, 
                         var _this = this;
                         return __generator(this, function (_a) {
                             fs.readFile("".concat(process.cwd(), "/templates/seed.hbs"), "utf8", function (customErr, customData) { return __awaiter(_this, void 0, void 0, function () {
-                                var err_1;
+                                var _a, _b, err_1;
                                 var _this = this;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
+                                return __generator(this, function (_c) {
+                                    switch (_c.label) {
                                         case 0:
                                             if (!customErr) return [3 /*break*/, 1];
                                             fs.readFile("".concat(__dirname, "/../../templates/seed.hbs"), "utf8", function (err, data) { return __awaiter(_this, void 0, void 0, function () {
-                                                var err_2;
-                                                return __generator(this, function (_a) {
-                                                    switch (_a.label) {
+                                                var _a, _b, err_2;
+                                                return __generator(this, function (_c) {
+                                                    switch (_c.label) {
                                                         case 0:
                                                             if (err) {
                                                                 console.log(err);
                                                                 reject(err);
                                                             }
-                                                            _a.label = 1;
+                                                            _c.label = 1;
                                                         case 1:
-                                                            _a.trys.push([1, 3, , 4]);
-                                                            return [4 /*yield*/, writeData(location, prettier.format(data
+                                                            _c.trys.push([1, 4, , 5]);
+                                                            _a = writeData;
+                                                            _b = [location];
+                                                            return [4 /*yield*/, prettier.format(data
                                                                     .replace(/{{modelName}}/g, collectionName.charAt(0).toUpperCase() +
                                                                     collectionName.substring(1, collectionName.length - 1))
-                                                                    .replace(/{{data}}/g, seedContent)))];
-                                                        case 2:
-                                                            _a.sent();
+                                                                    .replace(/{{data}}/g, seedContent))];
+                                                        case 2: return [4 /*yield*/, _a.apply(void 0, _b.concat([_c.sent()]))];
+                                                        case 3:
+                                                            _c.sent();
                                                             seedsClonedCount++;
                                                             resolve(data);
-                                                            return [3 /*break*/, 4];
-                                                        case 3:
-                                                            err_2 = _a.sent();
+                                                            return [3 /*break*/, 5];
+                                                        case 4:
+                                                            err_2 = _c.sent();
                                                             reject(err_2);
-                                                            return [3 /*break*/, 4];
-                                                        case 4: return [2 /*return*/];
+                                                            return [3 /*break*/, 5];
+                                                        case 5: return [2 /*return*/];
                                                     }
                                                 });
                                             }); });
-                                            return [3 /*break*/, 4];
+                                            return [3 /*break*/, 5];
                                         case 1:
-                                            _a.trys.push([1, 3, , 4]);
-                                            return [4 /*yield*/, writeData(location, prettier.format(customData
+                                            _c.trys.push([1, 4, , 5]);
+                                            _a = writeData;
+                                            _b = [location];
+                                            return [4 /*yield*/, prettier.format(customData
                                                     .replace(/{{modelName}}/g, collectionName.charAt(0).toUpperCase() +
                                                     collectionName.substring(1, collectionName.length - 1))
-                                                    .replace(/{{data}}/g, seedContent)))];
-                                        case 2:
-                                            _a.sent();
+                                                    .replace(/{{data}}/g, seedContent))];
+                                        case 2: return [4 /*yield*/, _a.apply(void 0, _b.concat([_c.sent()]))];
+                                        case 3:
+                                            _c.sent();
                                             seedsClonedCount++;
                                             resolve(customData);
-                                            return [3 /*break*/, 4];
-                                        case 3:
-                                            err_1 = _a.sent();
+                                            return [3 /*break*/, 5];
+                                        case 4:
+                                            err_1 = _c.sent();
                                             reject(err_1);
-                                            return [3 /*break*/, 4];
-                                        case 4: return [2 /*return*/];
+                                            return [3 /*break*/, 5];
+                                        case 5: return [2 /*return*/];
                                     }
                                 });
                             }); });

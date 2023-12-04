@@ -131,7 +131,7 @@ export default async (config: any) => {
                 try {
                   await writeData(
                     location,
-                    prettier.format(
+                    await prettier.format(
                       data
                         .replace(
                           /{{modelName}}/g,
@@ -155,7 +155,7 @@ export default async (config: any) => {
             try {
               await writeData(
                 location,
-                prettier.format(
+                await prettier.format(
                   customData
                     .replace(
                       /{{modelName}}/g,
