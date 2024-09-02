@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = jsonStringToObject;
 function jsonStringToObject(str) {
     if (!str)
         return {};
@@ -10,4 +11,3 @@ function jsonStringToObject(str) {
         return {};
     }
 }
-exports.default = jsonStringToObject;

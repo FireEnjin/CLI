@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = renderHandlebarsTemplateToFile;
 var writeToFile_1 = __importDefault(require("../helpers/writeToFile"));
 var fs_1 = __importDefault(require("fs"));
 var renderHandlebars_1 = __importDefault(require("./renderHandlebars"));
@@ -61,10 +62,10 @@ function renderAndWrite(templateFile, outFile, data, formatWithPrettier, partial
         });
     });
 }
-function renderHandlebarsTemplateToFile(templateFile, outFile, _a) {
-    var _b = _a === void 0 ? {} : _a, data = _b.data, formatWithPrettier = _b.formatWithPrettier, partials = _b.partials, helpers = _b.helpers, templatesDir = _b.templatesDir;
-    return __awaiter(this, void 0, void 0, function () {
+function renderHandlebarsTemplateToFile(templateFile_1, outFile_1) {
+    return __awaiter(this, arguments, void 0, function (templateFile, outFile, _a) {
         var _this = this;
+        var _b = _a === void 0 ? {} : _a, data = _b.data, formatWithPrettier = _b.formatWithPrettier, partials = _b.partials, helpers = _b.helpers, templatesDir = _b.templatesDir;
         return __generator(this, function (_c) {
             return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
                     var _this = this;
@@ -123,4 +124,3 @@ function renderHandlebarsTemplateToFile(templateFile, outFile, _a) {
         });
     });
 }
-exports.default = renderHandlebarsTemplateToFile;

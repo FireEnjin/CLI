@@ -35,6 +35,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = renderHandlebars;
 var Handlebars = __importStar(require("handlebars"));
 var getHandlebarsHelpers_1 = __importDefault(require("./getHandlebarsHelpers"));
 var currentHelpers = [];
@@ -69,4 +70,3 @@ function renderHandlebars(templateStr, data, options) {
     }
     return Handlebars.compile(templateStr)(data);
 }
-exports.default = renderHandlebars;

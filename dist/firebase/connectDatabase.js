@@ -23,6 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = connectDatabase;
 var fbAdmin = __importStar(require("firebase-admin"));
 var fs = __importStar(require("fs"));
 function connectDatabase(_a) {
@@ -43,4 +44,3 @@ function connectDatabase(_a) {
     }
     return firestore;
 }
-exports.default = connectDatabase;

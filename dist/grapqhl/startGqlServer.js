@@ -43,11 +43,11 @@ require("reflect-metadata");
 var path_1 = __importDefault(require("path"));
 var graphql_1 = require("@fireenjin/graphql");
 var type_graphql_1 = require("type-graphql");
-function main(_a) {
-    var _b = _a === void 0 ? {} : _a, authChecker = _b.authChecker, schemaPath = _b.schemaPath, schemaComments = _b.schemaComments, emitSchema = _b.emitSchema, introspection = _b.introspection;
-    return __awaiter(this, void 0, void 0, function () {
+function main() {
+    return __awaiter(this, arguments, void 0, function (_a) {
         var db, server;
         var _this = this;
+        var _b = _a === void 0 ? {} : _a, authChecker = _b.authChecker, schemaPath = _b.schemaPath, schemaComments = _b.schemaComments, emitSchema = _b.emitSchema, introspection = _b.introspection;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
@@ -55,12 +55,12 @@ function main(_a) {
                         serviceAccount: true,
                     });
                     server = new ApolloServer({
-                        context: function (_a) {
-                            var req = _a.req, res = _a.res;
-                            return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_b) {
+                        context: function (_a) { return __awaiter(_this, [_a], void 0, function (_b) {
+                            var req = _b.req, res = _b.res;
+                            return __generator(this, function (_c) {
                                 return [2 /*return*/, (0, graphql_1.session)({ req: req, res: res, db: db })];
-                            }); });
-                        },
+                            });
+                        }); },
                         schema: (0, type_graphql_1.buildSchemaSync)({
                             resolvers: [
                                 path_1.default.join(__dirname, "..", "/src/models/**/*.{ts,js}"),

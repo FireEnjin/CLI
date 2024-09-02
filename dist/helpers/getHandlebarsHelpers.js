@@ -34,6 +34,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = getHandlebarsHelpers;
 var lodash_1 = require("lodash");
 var date_fns_1 = require("date-fns");
 var jsonLogic = __importStar(require("json-logic-js"));
@@ -86,4 +87,3 @@ function getHandlebarsHelpers() {
         },
     };
 }
-exports.default = getHandlebarsHelpers;

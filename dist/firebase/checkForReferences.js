@@ -36,16 +36,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = checkForReferences;
 function checkForReferences(object) {
-    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var data, _i, _b, key, value;
+        var data, _i, _a, key, value;
+        var _b;
         return __generator(this, function (_c) {
             data = object;
-            for (_i = 0, _b = Object.keys(object); _i < _b.length; _i++) {
-                key = _b[_i];
+            for (_i = 0, _a = Object.keys(object); _i < _a.length; _i++) {
+                key = _a[_i];
                 value = object[key];
-                if (((_a = value === null || value === void 0 ? void 0 : value.constructor) === null || _a === void 0 ? void 0 : _a.name) === "Timestamp") {
+                if (((_b = value === null || value === void 0 ? void 0 : value.constructor) === null || _b === void 0 ? void 0 : _b.name) === "Timestamp") {
                     data[key] = value.toDate();
                 }
                 else if (typeof value === undefined) {
@@ -56,4 +57,3 @@ function checkForReferences(object) {
         });
     });
 }
-exports.default = checkForReferences;

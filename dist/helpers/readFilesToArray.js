@@ -39,11 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = readFilesToArray;
 var fs_1 = __importDefault(require("fs"));
-function readFilesToArray(dir, _a) {
-    var _b = _a === void 0 ? {} : _a, withFileTypes = _b.withFileTypes;
-    return __awaiter(this, void 0, void 0, function () {
+function readFilesToArray(dir_1) {
+    return __awaiter(this, arguments, void 0, function (dir, _a) {
         var files_1;
+        var _b = _a === void 0 ? {} : _a, withFileTypes = _b.withFileTypes;
         return __generator(this, function (_c) {
             try {
                 files_1 = [];
@@ -61,4 +62,3 @@ function readFilesToArray(dir, _a) {
         });
     });
 }
-exports.default = readFilesToArray;
